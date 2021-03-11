@@ -11,7 +11,7 @@ primary key (`id`)
 CREATE TABLE `accounts` (
 `id` int NOT NULL AUTO_INCREMENT,
 `account_number` int default null,
-`pin_number` varchar(64) default null,
+`pin_number` int default null,
 `balance` FLOAT,
 `customer_id` int default null,
 primary key (`id`),
@@ -41,3 +41,4 @@ CREATE TABLE `transfers` (
 `to_account` int not null,
 primary key (`id`)
 );
+SET FOREIGN_KEY_CHECKS = 1;

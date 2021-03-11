@@ -41,7 +41,7 @@ public class CustomersDaoImpl implements CustomersDao {
         Session session = sessionFactory.getCurrentSession();
         Customer customer=session.get(Customer.class,id);
         if (customer == null) {
-            throw new CustomException("Customer id not found - " + id);
+            throw new CustomException("Customer with id: " + id+" not found.");
         }
         session.delete(customer);
         return "Customer with id: "+id+" has been deleted";
@@ -52,7 +52,7 @@ public class CustomersDaoImpl implements CustomersDao {
         Session session = sessionFactory.getCurrentSession();
         Customer customer=session.get(Customer.class,id);
         if (customer == null) {
-            throw new CustomException("Customer id not found - " + id);
+            throw new CustomException("Customer with id: " + id+" not found.");
         }
         return customer;
     }
