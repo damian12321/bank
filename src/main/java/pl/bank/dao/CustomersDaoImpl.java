@@ -29,21 +29,31 @@ public class CustomersDaoImpl implements CustomersDao {
 
     @Override
     public Customer createCustomer(Customer customer) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        customer.setId(0);
+        session.save(customer);
+        return customer;
     }
 
     @Override
     public String deleteCustomer(int id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        Customer customer=session.get(Customer.class,id);
+        session.delete(customer);
+        return "Customer with id: "+id+" has been deleted";
     }
 
     @Override
     public Customer getCustomer(int id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        Customer customer=session.get(Customer.class,id);
+        return customer;
     }
 
     @Override
     public Customer updateCustomer(Customer customer) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(customer);
+        return customer;
     }
 }

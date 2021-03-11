@@ -3,6 +3,7 @@ package pl.bank.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import pl.bank.entity.Customer;
 import pl.bank.service.AccountsService;
 import pl.bank.service.CustomersService;
