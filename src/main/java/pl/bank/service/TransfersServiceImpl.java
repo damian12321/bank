@@ -25,7 +25,7 @@ public class TransfersServiceImpl implements TransfersService {
     }
 
     @Override
-    public String createTransfer(Transfer transfer) {
+    public Transfer createTransfer(Transfer transfer) {
         return transfersDao.createTransfer(transfer);
     }
 

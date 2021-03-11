@@ -7,7 +7,7 @@ import java.util.List;
 public interface TransfersDao {
     public List<Transfer> getTransfers();
 
-    public String createTransfer(Transfer transfer);
+    public Transfer createTransfer(Transfer transfer);
 
     public String deleteTransfer(int id);
 

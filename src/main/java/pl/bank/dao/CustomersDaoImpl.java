@@ -13,7 +13,7 @@ public class CustomersDaoImpl implements CustomersDao {
     }
 
     @Override
-    public String createCustomer(Customer customer) {
+    public Customer createCustomer(Customer customer) {
         return null;
     }
 

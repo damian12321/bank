@@ -13,7 +13,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
     }
 
     @Override
-    public String createTransaction(Transaction transaction) {
+    public Transaction createTransaction(Transaction transaction) {
         return null;
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 public interface TransactionsService {
     public List<Transaction> getTransactions();
 
-    public String createTransaction(Transaction transaction);
+    public Transaction createTransaction(Transaction transaction);
 
     public String deleteTransaction(int id);
 

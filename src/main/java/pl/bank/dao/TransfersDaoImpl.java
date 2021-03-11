@@ -13,7 +13,7 @@ public class TransfersDaoImpl implements TransfersDao {
     }
 
     @Override
-    public String createTransfer(Transfer transfer) {
+    public Transfer createTransfer(Transfer transfer) {
         return null;
     }
 

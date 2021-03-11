@@ -24,7 +24,7 @@ public class CustomersServiceImpl implements CustomersService {
     }
 
     @Override
-    public String createCustomer(Customer customer) {
+    public Customer createCustomer(Customer customer) {
         return customersDao.createCustomer(customer);
     }
 

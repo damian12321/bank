@@ -13,7 +13,7 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     @Override
-    public String createAccount(Account account) {
+    public Account createAccount(Account account) {
         return null;
     }
 

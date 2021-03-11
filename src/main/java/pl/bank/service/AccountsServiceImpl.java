@@ -24,7 +24,7 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public String createAccount(Account account) {
+    public Account createAccount(Account account) {
         return accountsDao.createAccount(account);
     }
 

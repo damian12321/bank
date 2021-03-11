@@ -7,7 +7,7 @@ import java.util.List;
 public interface AccountsService {
     public List<Account> getAccounts();
 
-    public String createAccount(Account account);
+    public Account createAccount(Account account);
 
     public String deleteAccount(int id);
 

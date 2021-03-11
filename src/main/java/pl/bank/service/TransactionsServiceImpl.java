@@ -3,6 +3,7 @@ package pl.bank.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.bank.dao.TransactionsDao;
+import pl.bank.entity.Customer;
 import pl.bank.entity.Transaction;
 
 import javax.transaction.Transactional;
@@ -24,7 +25,7 @@ public class TransactionsServiceImpl implements TransactionsService {
     }
 
     @Override
-    public String createTransaction(Transaction transaction) {
+    public Transaction createTransaction(Transaction transaction) {
         return transactionsDao.createTransaction(transaction);
     }
 
