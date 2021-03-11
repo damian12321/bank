@@ -1,4 +1,3 @@
-pl\bank\Test\TestDemo.class
 pl\bank\entity\Account.class
 pl\bank\service\AccountsService.class
 pl\bank\dao\AccountsDaoImpl.class
@@ -16,8 +15,10 @@ pl\bank\dao\TransactionsDao.class
 pl\bank\service\TransfersService.class
 pl\bank\dao\TransfersDao.class
 pl\bank\entity\Customer.class
+pl\bank\controller\BankController.class
 pl\bank\dao\TransfersDaoImpl.class
 pl\bank\dao\TransactionsDaoImpl.class
 pl\bank\service\CustomersService.class
+pl\bank\configuration\MySpringMvcDispatcherServletInitializer.class
 pl\bank\configuration\DemoAppConfig.class
 pl\bank\service\TransactionsService.class

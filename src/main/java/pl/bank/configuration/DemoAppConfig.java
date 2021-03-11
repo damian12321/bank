@@ -10,6 +10,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
@@ -17,6 +19,8 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 @Configuration
+@EnableWebMvc
+@EnableTransactionManagement
 @ComponentScan("pl.bank")
 @PropertySource({ "classpath:persistence-mysql.properties" })
 public class DemoAppConfig{
@@ -36,7 +40,7 @@ public class DemoAppConfig{
 
 		// set the jdbc driver
 		try {
-			myDataSource.setDriverClass("com.mysql.jdbc.Driver");		
+			myDataSource.setDriverClass(env.getProperty("jdbc.driver"));
 		}
 		catch (PropertyVetoException exc) {
 			throw new RuntimeException(exc);

@@ -1,6 +1,7 @@
 package pl.bank.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 import pl.bank.entity.Customer;
 import pl.bank.service.AccountsService;
@@ -11,20 +12,13 @@ import pl.bank.service.TransfersService;
 import java.util.List;
 
 @RestController
+@EnableTransactionManagement
 @RequestMapping("/api")
 public class BankController {
-    private AccountsService accountsService;
-    private CustomersService customersService;
-    private TransfersService transfersService;
-    private TransactionsService transactionsService;
 
     @Autowired
-    public BankController(AccountsService accountsService, CustomersService customersService, TransfersService transfersService, TransactionsService transactionsService) {
-        this.accountsService = accountsService;
-        this.customersService = customersService;
-        this.transfersService = transfersService;
-        this.transactionsService = transactionsService;
-    }
+    private CustomersService customersService;
+
 
     @GetMapping("/customer")
     public List<Customer> getCustomers() {
