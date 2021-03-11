@@ -1,5 +1,9 @@
 package pl.bank.dao;
 
+import pl.bank.entity.Customer;
+
+import java.util.List;
+
 public class CustomersDaoImpl implements CustomersDao{
     @Override
     public List<Customer> getCustomers() {
@@ -17,12 +21,12 @@ public class CustomersDaoImpl implements CustomersDao{
     }
 
     @Override
-    public Account getCustomer(int id) {
+    public Customer getCustomer(int id) {
         return null;
     }
 
     @Override
-    public Account updateCustomer(Customer customer) {
+    public Customer updateCustomer(Customer customer) {
         return null;
     }
 }

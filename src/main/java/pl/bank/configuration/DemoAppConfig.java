@@ -88,7 +88,7 @@ public class DemoAppConfig{
 	@Bean
 	public LocalSessionFactoryBean sessionFactory(){
 		
-		// create session factorys
+		// create session factory
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		
 		// set the properties

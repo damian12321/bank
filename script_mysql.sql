@@ -24,7 +24,7 @@ ON DELETE NO ACTION ON UPDATE NO ACTION
 
 CREATE TABLE `transactions` (
 `id` int NOT NULL AUTO_INCREMENT,
-`transaction` varchar(30) default null,
+`transaction_type` varchar(30) default null,
 `account_id` int default null,
 `date` DATETIME default null,
 primary key (`id`),

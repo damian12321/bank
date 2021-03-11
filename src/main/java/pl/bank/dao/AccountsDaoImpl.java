@@ -1,5 +1,9 @@
 package pl.bank.dao;
 
+import pl.bank.entity.Account;
+
+import java.util.List;
+
 public class AccountsDaoImpl implements AccountsDao{
     @Override
     public List<Account> getAccounts() {

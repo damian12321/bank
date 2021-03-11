@@ -1,5 +1,9 @@
 package pl.bank.service;
 
+import pl.bank.entity.Transaction;
+
+import java.util.List;
+
 public class TransactionsServiceImpl implements TransactionsService{
     @Override
     public List<Transaction> getTransactions() {
@@ -17,12 +21,12 @@ public class TransactionsServiceImpl implements TransactionsService{
     }
 
     @Override
-    public Account getTransaction(int id) {
+    public Transaction getTransaction(int id) {
         return null;
     }
 
     @Override
-    public Account updateTransaction(Transaction transaction) {
+    public Transaction updateTransaction(Transaction transaction) {
         return null;
     }
 }

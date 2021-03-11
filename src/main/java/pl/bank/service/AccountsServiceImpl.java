@@ -1,5 +1,9 @@
 package pl.bank.service;
 
+import pl.bank.entity.Account;
+
+import java.util.List;
+
 public class AccountsServiceImpl implements AccountsService{
     @Override
     public List<Account> getAccounts() {

@@ -1,5 +1,9 @@
 package pl.bank.dao;
 
+import pl.bank.entity.Account;
+
+import java.util.List;
+
 public interface AccountsDao {
     public List<Account> getAccounts();
     public String createAccount(Account account);

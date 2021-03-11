@@ -1,5 +1,9 @@
 package pl.bank.dao;
 
+import pl.bank.entity.Transfer;
+
+import java.util.List;
+
 public class TransfersDaoImpl implements TransfersDao{
     @Override
     public List<Transfer> getTransfers() {
@@ -17,12 +21,12 @@ public class TransfersDaoImpl implements TransfersDao{
     }
 
     @Override
-    public Account getTransfer(int id) {
+    public Transfer getTransfer(int id) {
         return null;
     }
 
     @Override
-    public Account updateTransfer(Transfer transfer) {
+    public Transfer updateTransfer(Transfer transfer) {
         return null;
     }
 }

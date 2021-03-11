@@ -1,9 +1,13 @@
 package pl.bank.dao;
 
+import pl.bank.entity.Customer;
+
+import java.util.List;
+
 public interface CustomersDao {
     public List<Customer> getCustomers();
     public String createCustomer(Customer customer);
     public String deleteCustomer(int number);
-    public Account getCustomer(int id);
-    public Account updateCustomer(Customer customer);
+    public Customer getCustomer(int id);
+    public Customer updateCustomer(Customer customer);
 }

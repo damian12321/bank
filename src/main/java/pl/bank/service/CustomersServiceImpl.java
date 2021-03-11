@@ -1,5 +1,9 @@
 package pl.bank.service;
 
+import pl.bank.entity.Customer;
+
+import java.util.List;
+
 public class CustomersServiceImpl implements CustomersService{
     @Override
     public List<Customer> getCustomers() {
@@ -17,12 +21,12 @@ public class CustomersServiceImpl implements CustomersService{
     }
 
     @Override
-    public Account getCustomer(int id) {
+    public Customer getCustomer(int id) {
         return null;
     }
 
     @Override
-    public Account updateCustomer(Customer customer) {
+    public Customer updateCustomer(Customer customer) {
         return null;
     }
 }
