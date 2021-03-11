@@ -1,10 +1,12 @@
 package pl.bank.dao;
 
+import org.springframework.stereotype.Repository;
 import pl.bank.entity.Transfer;
 
 import java.util.List;
 
-public class TransfersDaoImpl implements TransfersDao{
+@Repository
+public class TransfersDaoImpl implements TransfersDao {
     @Override
     public List<Transfer> getTransfers() {
         return null;

@@ -14,7 +14,8 @@ public class Transaction {
     @Column(name = "transaction_type")
     private String transactionType;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH,
+            CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "account_id")
     private Account account;
 

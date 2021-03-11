@@ -1,10 +1,12 @@
 package pl.bank.dao;
 
+import org.springframework.stereotype.Repository;
 import pl.bank.entity.Customer;
 
 import java.util.List;
 
-public class CustomersDaoImpl implements CustomersDao{
+@Repository
+public class CustomersDaoImpl implements CustomersDao {
     @Override
     public List<Customer> getCustomers() {
         return null;

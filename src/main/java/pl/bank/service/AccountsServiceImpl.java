@@ -1,10 +1,23 @@
 package pl.bank.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import pl.bank.dao.AccountsDao;
 import pl.bank.entity.Account;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
-public class AccountsServiceImpl implements AccountsService{
+@Service
+@Transactional
+public class AccountsServiceImpl implements AccountsService {
+    private AccountsDao accountsDao;
+
+    @Autowired
+    public AccountsServiceImpl(AccountsDao accountsDao) {
+        this.accountsDao = accountsDao;
+    }
+
     @Override
     public List<Account> getAccounts() {
         return null;

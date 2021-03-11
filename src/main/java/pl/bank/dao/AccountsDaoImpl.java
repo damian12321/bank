@@ -1,10 +1,12 @@
 package pl.bank.dao;
 
+import org.springframework.stereotype.Repository;
 import pl.bank.entity.Account;
 
 import java.util.List;
 
-public class AccountsDaoImpl implements AccountsDao{
+@Repository
+public class AccountsDaoImpl implements AccountsDao {
     @Override
     public List<Account> getAccounts() {
         return null;

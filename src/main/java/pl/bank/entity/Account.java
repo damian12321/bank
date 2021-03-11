@@ -1,6 +1,7 @@
 package pl.bank.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "accounts")
@@ -22,6 +23,10 @@ public class Account {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = {CascadeType.DETACH,
+            CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Transaction> transactionList;
 
     public Account() {
     }
