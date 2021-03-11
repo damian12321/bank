@@ -6,6 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.bank.entity.Customer;
+import pl.bank.exception.CustomException;
 
 import java.util.List;
 
@@ -39,6 +40,9 @@ public class CustomersDaoImpl implements CustomersDao {
     public String deleteCustomer(int id) {
         Session session = sessionFactory.getCurrentSession();
         Customer customer=session.get(Customer.class,id);
+        if (customer == null) {
+            throw new CustomException("Customer id not found - " + id);
+        }
         session.delete(customer);
         return "Customer with id: "+id+" has been deleted";
     }
@@ -47,6 +51,9 @@ public class CustomersDaoImpl implements CustomersDao {
     public Customer getCustomer(int id) {
         Session session = sessionFactory.getCurrentSession();
         Customer customer=session.get(Customer.class,id);
+        if (customer == null) {
+            throw new CustomException("Customer id not found - " + id);
+        }
         return customer;
     }
 
