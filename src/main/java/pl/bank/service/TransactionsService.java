@@ -9,7 +9,7 @@ public interface TransactionsService {
 
     public String createTransaction(Transaction transaction);
 
-    public String deleteTransaction(int number);
+    public String deleteTransaction(int id);
 
     public Transaction getTransaction(int id);
 

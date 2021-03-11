@@ -3,6 +3,7 @@ package pl.bank.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.bank.dao.AccountsDao;
+import pl.bank.dao.TransfersDao;
 import pl.bank.entity.Transfer;
 
 import javax.transaction.Transactional;
@@ -11,35 +12,35 @@ import java.util.List;
 @Service
 @Transactional
 public class TransfersServiceImpl implements TransfersService {
-    private AccountsDao accountsDao;
+    private TransfersDao transfersDao;
 
     @Autowired
-    public TransfersServiceImpl(AccountsDao accountsDao) {
-        this.accountsDao = accountsDao;
+    public TransfersServiceImpl(TransfersDao transfersDao) {
+        this.transfersDao = transfersDao;
     }
 
     @Override
     public List<Transfer> getTransfers() {
-        return null;
+        return transfersDao.getTransfers();
     }
 
     @Override
     public String createTransfer(Transfer transfer) {
-        return null;
+        return transfersDao.createTransfer(transfer);
     }
 
     @Override
-    public String deleteTransfer(int number) {
-        return null;
+    public String deleteTransfer(int id) {
+        return transfersDao.deleteTransfer(id);
     }
 
     @Override
     public Transfer getTransfer(int id) {
-        return null;
+        return transfersDao.getTransfer(id);
     }
 
     @Override
     public Transfer updateTransfer(Transfer transfer) {
-        return null;
+        return transfersDao.updateTransfer(transfer);
     }
 }

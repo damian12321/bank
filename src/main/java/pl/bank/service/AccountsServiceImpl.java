@@ -20,26 +20,26 @@ public class AccountsServiceImpl implements AccountsService {
 
     @Override
     public List<Account> getAccounts() {
-        return null;
+        return accountsDao.getAccounts();
     }
 
     @Override
     public String createAccount(Account account) {
-        return null;
+        return accountsDao.createAccount(account);
     }
 
     @Override
-    public String deleteAccount(int number) {
-        return null;
+    public String deleteAccount(int id) {
+        return accountsDao.deleteAccount(id);
     }
 
     @Override
     public Account getAccount(int id) {
-        return null;
+        return accountsDao.getAccount(id);
     }
 
     @Override
     public Account updateAccount(Account account) {
-        return null;
+        return accountsDao.updateAccount(account);
     }
 }

@@ -18,7 +18,7 @@ public class CustomersDaoImpl implements CustomersDao {
     }
 
     @Override
-    public String deleteCustomer(int number) {
+    public String deleteCustomer(int id) {
         return null;
     }
 

@@ -9,7 +9,7 @@ public interface AccountsDao {
 
     public String createAccount(Account account);
 
-    public String deleteAccount(int number);
+    public String deleteAccount(int id);
 
     public Account getAccount(int id);
 

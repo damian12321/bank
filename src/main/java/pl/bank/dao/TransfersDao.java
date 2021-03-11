@@ -9,7 +9,7 @@ public interface TransfersDao {
 
     public String createTransfer(Transfer transfer);
 
-    public String deleteTransfer(int number);
+    public String deleteTransfer(int id);
 
     public Transfer getTransfer(int id);
 

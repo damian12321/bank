@@ -20,26 +20,26 @@ public class TransactionsServiceImpl implements TransactionsService {
 
     @Override
     public List<Transaction> getTransactions() {
-        return null;
+        return transactionsDao.getTransactions();
     }
 
     @Override
     public String createTransaction(Transaction transaction) {
-        return null;
+        return transactionsDao.createTransaction(transaction);
     }
 
     @Override
-    public String deleteTransaction(int number) {
-        return null;
+    public String deleteTransaction(int id) {
+        return transactionsDao.deleteTransaction(id);
     }
 
     @Override
     public Transaction getTransaction(int id) {
-        return null;
+        return transactionsDao.getTransaction(id);
     }
 
     @Override
     public Transaction updateTransaction(Transaction transaction) {
-        return null;
+        return transactionsDao.updateTransaction(transaction);
     }
 }

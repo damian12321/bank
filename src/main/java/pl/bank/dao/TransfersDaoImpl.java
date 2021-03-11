@@ -18,7 +18,7 @@ public class TransfersDaoImpl implements TransfersDao {
     }
 
     @Override
-    public String deleteTransfer(int number) {
+    public String deleteTransfer(int id) {
         return null;
     }
 

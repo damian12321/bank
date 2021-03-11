@@ -18,7 +18,7 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     @Override
-    public String deleteAccount(int number) {
+    public String deleteAccount(int id) {
         return null;
     }
 

@@ -20,26 +20,26 @@ public class CustomersServiceImpl implements CustomersService {
 
     @Override
     public List<Customer> getCustomers() {
-        return null;
+        return customersDao.getCustomers();
     }
 
     @Override
     public String createCustomer(Customer customer) {
-        return null;
+        return customersDao.createCustomer(customer);
     }
 
     @Override
-    public String deleteCustomer(int number) {
-        return null;
+    public String deleteCustomer(int id) {
+        return customersDao.deleteCustomer(id);
     }
 
     @Override
     public Customer getCustomer(int id) {
-        return null;
+        return customersDao.getCustomer(id);
     }
 
     @Override
     public Customer updateCustomer(Customer customer) {
-        return null;
+        return customersDao.updateCustomer(customer);
     }
 }

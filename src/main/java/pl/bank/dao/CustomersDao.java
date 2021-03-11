@@ -9,7 +9,7 @@ public interface CustomersDao {
 
     public String createCustomer(Customer customer);
 
-    public String deleteCustomer(int number);
+    public String deleteCustomer(int id);
 
     public Customer getCustomer(int id);
 

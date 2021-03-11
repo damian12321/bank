@@ -18,7 +18,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
     }
 
     @Override
-    public String deleteTransaction(int number) {
+    public String deleteTransaction(int id) {
         return null;
     }
 
