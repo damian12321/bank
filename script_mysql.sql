@@ -25,7 +25,7 @@ ON DELETE NO ACTION ON UPDATE NO ACTION
 CREATE TABLE `transactions` (
 `id` int NOT NULL AUTO_INCREMENT,
 `transaction_type` varchar(30) default null,
-`account_id` int default null,
+`account_id` int not null,
 `date` DATETIME default null,
 primary key (`id`),
 KEY `FK_account_ID_idx` (`account_id`),
@@ -33,12 +33,5 @@ CONSTRAINT `FK_ACCOUNT`
 FOREIGN KEY (`account_id`) 
 REFERENCES `accounts` (`id`) 
 ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
-CREATE TABLE `transfers` (
-`id` int NOT NULL AUTO_INCREMENT,
-`from_account` int not null,
-`to_account` int not null,
-primary key (`id`)
 );
 SET FOREIGN_KEY_CHECKS = 1;

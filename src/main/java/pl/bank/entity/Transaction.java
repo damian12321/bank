@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(name="transactions")
+@Table(name = "transactions")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,13 +16,10 @@ public class Transaction {
     private String transactionType;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date")
+    @Column(name = "date")
     private Date date;
 
-    public Transaction() {
-    }
-
-    public Transaction(String transactionType, Account account, Date date) {
+    public Transaction(String transactionType, Date date) {
         this.transactionType = transactionType;
         this.date = date;
     }
