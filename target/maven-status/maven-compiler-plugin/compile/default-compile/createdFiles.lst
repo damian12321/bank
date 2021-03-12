@@ -9,6 +9,7 @@ pl\bank\service\TransfersServiceImpl.class
 pl\bank\Test\JDBCTest.class
 pl\bank\service\AccountsServiceImpl.class
 pl\bank\dao\AccountsDao.class
+pl\bank\exception\CustomException.class
 pl\bank\service\CustomersServiceImpl.class
 pl\bank\dao\CustomersDao.class
 pl\bank\dao\TransactionsDao.class
@@ -18,7 +19,9 @@ pl\bank\entity\Customer.class
 pl\bank\controller\BankController.class
 pl\bank\dao\TransfersDaoImpl.class
 pl\bank\dao\TransactionsDaoImpl.class
+pl\bank\exception\CustomExceptionHandler.class
 pl\bank\service\CustomersService.class
 pl\bank\configuration\MySpringMvcDispatcherServletInitializer.class
+pl\bank\exception\GlobalExceptionHandler.class
 pl\bank\configuration\DemoAppConfig.class
 pl\bank\service\TransactionsService.class

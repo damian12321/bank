@@ -2,7 +2,6 @@ package pl.bank.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.bank.dao.AccountsDao;
 import pl.bank.dao.TransfersDao;
 import pl.bank.entity.Transfer;
 

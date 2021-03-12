@@ -24,8 +24,8 @@ public class Account {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = {CascadeType.DETACH,
-            CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name="account_id")
     private List<Transaction> transactionList;
 
     public Account() {
@@ -76,5 +76,25 @@ public class Account {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", accountNumber=" + accountNumber +
+                ", pinNumber=" + "*******" +
+                ", balance=" + balance +
+                ", customer=" + customer +
+                ", transactionList=" + transactionList +
+                '}';
     }
 }

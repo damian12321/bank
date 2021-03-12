@@ -47,4 +47,13 @@ public class Transfer {
     public void setToAccount(String toAccount) {
         this.toAccount = toAccount;
     }
+
+    @Override
+    public String toString() {
+        return "Transfer{" +
+                "id=" + id +
+                ", fromAccount='" + fromAccount + '\'' +
+                ", toAccount='" + toAccount + '\'' +
+                '}';
+    }
 }

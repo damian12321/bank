@@ -15,11 +15,6 @@ public class Transaction {
     @Column(name = "transaction_type")
     private String transactionType;
 
-    @ManyToOne(cascade = {CascadeType.DETACH,
-            CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "account_id")
-    private Account account;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date")
     private Date date;
@@ -29,7 +24,6 @@ public class Transaction {
 
     public Transaction(String transactionType, Account account, Date date) {
         this.transactionType = transactionType;
-        this.account = account;
         this.date = date;
     }
 
@@ -49,13 +43,6 @@ public class Transaction {
         this.transactionType = transactionType;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 
     public Date getDate() {
         return date;
@@ -63,5 +50,14 @@ public class Transaction {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", transactionType='" + transactionType + '\'' +
+                ", date=" + date +
+                '}';
     }
 }
