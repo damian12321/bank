@@ -24,9 +24,11 @@ ON DELETE NO ACTION ON UPDATE NO ACTION
 
 CREATE TABLE `transactions` (
 `id` int NOT NULL AUTO_INCREMENT,
-`transaction_type` varchar(30) default null,
-`account_id` int not null,
+`transaction_type` varchar(20) default null,
+`amount` FLOAT not null,
+`account_id` int default null,
 `date` DATETIME default null,
+`description` varchar(64) not null,
 primary key (`id`),
 KEY `FK_account_ID_idx` (`account_id`),
 CONSTRAINT `FK_ACCOUNT` 

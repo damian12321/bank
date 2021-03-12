@@ -42,4 +42,9 @@ public class AccountsServiceImpl implements AccountsService {
     public Account updateAccount(Account account) {
         return accountsDao.updateAccount(account);
     }
+
+    public String transferMoney(int fromAccount, int destinationAccount, float amount)
+    {
+        return accountsDao.transferMoney(fromAccount,destinationAccount,amount);
+    }
 }

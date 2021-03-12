@@ -14,4 +14,6 @@ public interface AccountsDao {
     public Account getAccount(int id);
 
     public Account updateAccount(Account account);
+
+    public String transferMoney(int fromAccount, int destinationAccount, float amount);
 }

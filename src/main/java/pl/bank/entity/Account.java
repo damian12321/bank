@@ -24,8 +24,8 @@ public class Account {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name="account_id")
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
     private List<Transaction> transactionList;
 
     public Account() {

@@ -39,20 +39,20 @@ public class TransactionsDaoImpl implements TransactionsDao {
     @Override
     public String deleteTransaction(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction Transaction=session.get(Transaction.class,id);
+        Transaction Transaction = session.get(Transaction.class, id);
         if (Transaction == null) {
-            throw new CustomException("Transaction with id: " + id+" not found.");
+            throw new CustomException("Transaction with id: " + id + " not found.");
         }
         session.delete(Transaction);
-        return "Transaction with id: "+id+" has been deleted";
+        return "Transaction with id: " + id + " has been deleted";
     }
 
     @Override
     public Transaction getTransaction(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction Transaction=session.get(Transaction.class,id);
+        Transaction Transaction = session.get(Transaction.class, id);
         if (Transaction == null) {
-            throw new CustomException("Transaction with id: " + id+" not found.");
+            throw new CustomException("Transaction with id: " + id + " not found.");
         }
         return Transaction;
     }

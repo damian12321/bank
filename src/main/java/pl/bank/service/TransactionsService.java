@@ -14,4 +14,5 @@ public interface TransactionsService {
     public Transaction getTransaction(int id);
 
     public Transaction updateTransaction(Transaction transaction);
+
 }
