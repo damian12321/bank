@@ -15,5 +15,5 @@ public interface AccountsService {
 
     public Account updateAccount(Account account);
 
-    public String transferMoney(int fromAccount, int destinationAccount, float amount);
+    public String transferMoney(int fromAccount,int pinNumber, int destinationAccount, float amount);
 }

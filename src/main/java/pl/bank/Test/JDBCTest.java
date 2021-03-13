@@ -30,9 +30,9 @@ public class JDBCTest {
                 String lastName = rs.getString("last_name");
 
                 //Display values
-                Customer customer = new Customer(firstname, lastName);
-                customer.setId(id);
-                System.out.println(customer);
+//                Customer customer = new Customer(firstname, lastName);
+//                customer.setId(id);
+//                System.out.println(customer);
             }
 
         } catch (Exception e) {

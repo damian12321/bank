@@ -43,8 +43,7 @@ public class AccountsServiceImpl implements AccountsService {
         return accountsDao.updateAccount(account);
     }
 
-    public String transferMoney(int fromAccount, int destinationAccount, float amount)
-    {
-        return accountsDao.transferMoney(fromAccount,destinationAccount,amount);
+    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount) {
+        return accountsDao.transferMoney(fromAccount, pinNumber, destinationAccount, amount);
     }
 }

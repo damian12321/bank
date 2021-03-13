@@ -17,9 +17,9 @@ public class TransferController {
 
     }
 
-    @PostMapping("/transfer/{fromAccountNumber}/{toAccountNumber}/{amount}")
-    public String transferMoney(@PathVariable int fromAccountNumber, @PathVariable int toAccountNumber, @PathVariable float amount) {
-        return accountsService.transferMoney(fromAccountNumber, toAccountNumber, amount);
+    @PostMapping("/transfer/{fromAccountNumber}/{pinNumber}/{toAccountNumber}/{amount}")
+    public String transferMoney(@PathVariable int fromAccountNumber, @PathVariable int pinNumber, @PathVariable int toAccountNumber, @PathVariable float amount) {
+        return accountsService.transferMoney(fromAccountNumber, pinNumber, toAccountNumber, amount);
     }
 
 }

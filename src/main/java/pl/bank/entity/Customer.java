@@ -19,11 +19,6 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     public int getId() {
         return id;
     }

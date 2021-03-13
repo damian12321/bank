@@ -68,7 +68,7 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     @Override
-    public String transferMoney(int fromAccount, int destinationAccount, float amount) {
+    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount) {
         if (fromAccount == destinationAccount || amount <= 0) {
             throw new CustomException("Incorrect values.");
         }
@@ -78,6 +78,12 @@ public class AccountsDaoImpl implements AccountsDao {
             throw new CustomException("Account with number: " + fromAccount + " not found.");
         }
         Account frAccount = query.getResultList().get(0);
+        if (frAccount.getPinNumber() != pinNumber) {
+            throw new CustomException("Pin number is incorrect.");
+        }
+        if (!frAccount.isActive()) {
+            throw new CustomException("Account with number " + fromAccount + " is not active.");
+        }
         query = session.createQuery("from Account where accountNumber =" + destinationAccount);
         if (query.list().isEmpty()) {
             throw new CustomException("Destination account with number: " + destinationAccount + " not found.");
@@ -91,9 +97,9 @@ public class AccountsDaoImpl implements AccountsDao {
         frAccount.setBalance(balance1 - amount);
         toAccount.setBalance(balance2 + amount);
         List<Transaction> list1 = frAccount.getTransactionList();
-        list1.add(new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), "Outgoing transfer to account " + destinationAccount+"."));
+        list1.add(new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), "Outgoing transfer to account " + destinationAccount + "."));
         List<Transaction> list2 = toAccount.getTransactionList();
-        list2.add(new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), "Incoming transfer from account " + fromAccount+"."));
+        list2.add(new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), "Incoming transfer from account " + fromAccount + "."));
         session.save(frAccount);
         session.save(toAccount);
         return "The money has been transferred from " + fromAccount + " to " + destinationAccount + ".";

@@ -24,18 +24,14 @@ public class Account {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @Column(name = "active")
+    private boolean isActive;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private List<Transaction> transactionList;
 
     public Account() {
-    }
-
-    public Account(int accountNumber, int pinNumber, float balance, Customer customer) {
-        this.accountNumber = accountNumber;
-        this.pinNumber = pinNumber;
-        this.balance = balance;
-        this.customer = customer;
     }
 
     public int getId() {
@@ -84,6 +80,14 @@ public class Account {
 
     public void setTransactionList(List<Transaction> transactionList) {
         this.transactionList = transactionList;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Override
