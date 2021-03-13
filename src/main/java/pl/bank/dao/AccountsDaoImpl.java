@@ -69,19 +69,20 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public String transferMoney(int fromAccount, int destinationAccount, float amount) {
-        if(fromAccount==destinationAccount||amount<=0)
-        {
+        if (fromAccount == destinationAccount || amount <= 0) {
             throw new CustomException("Incorrect values.");
         }
         Session session = sessionFactory.getCurrentSession();
-        Account frAccount = session.get(Account.class, fromAccount);
-        if (frAccount == null) {
-            throw new CustomException("Account with id: " + fromAccount + " not found.");
+        Query<Account> query = session.createQuery("from Account where accountNumber =" + fromAccount);
+        if (query.list().isEmpty()) {
+            throw new CustomException("Account with number: " + fromAccount + " not found.");
         }
-        Account toAccount = session.get(Account.class, destinationAccount);
-        if (toAccount == null) {
-            throw new CustomException("Destination account with id: " + destinationAccount + " not found.");
+        Account frAccount = query.getResultList().get(0);
+        query = session.createQuery("from Account where accountNumber =" + destinationAccount);
+        if (query.list().isEmpty()) {
+            throw new CustomException("Destination account with number: " + destinationAccount + " not found.");
         }
+        Account toAccount = query.getResultList().get(0);
         float balance1 = frAccount.getBalance();
         float balance2 = toAccount.getBalance();
         if (balance1 - amount < 0) {
@@ -89,10 +90,10 @@ public class AccountsDaoImpl implements AccountsDao {
         }
         frAccount.setBalance(balance1 - amount);
         toAccount.setBalance(balance2 + amount);
-        List<Transaction>list1=frAccount.getTransactionList();
-        list1.add(new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), "Outgoing transfer to " + destinationAccount));
-        List<Transaction>list2=toAccount.getTransactionList();
-        list2.add(new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), "Incoming transfer from " + fromAccount));
+        List<Transaction> list1 = frAccount.getTransactionList();
+        list1.add(new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), "Outgoing transfer to account " + destinationAccount+"."));
+        List<Transaction> list2 = toAccount.getTransactionList();
+        list2.add(new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), "Incoming transfer from account " + fromAccount+"."));
         session.save(frAccount);
         session.save(toAccount);
         return "The money has been transferred from " + fromAccount + " to " + destinationAccount + ".";
