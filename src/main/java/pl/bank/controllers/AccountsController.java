@@ -28,9 +28,9 @@ public class AccountsController {
         return accountsService.getAccounts();
     }
 
-    @GetMapping("/account/{accountId}")
-    public Account getAccount(@PathVariable int accountId) {
-        return accountsService.getAccount(accountId);
+    @GetMapping("/account/{accountId}/{pinNumber}")
+    public Account getAccount(@PathVariable int accountId, @PathVariable int pinNumber) {
+        return accountsService.getAccount(accountId, pinNumber);
     }
 
     @DeleteMapping("/account/{accountId}")

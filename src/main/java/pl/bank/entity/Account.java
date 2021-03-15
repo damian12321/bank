@@ -2,6 +2,7 @@ package pl.bank.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "accounts")
@@ -24,6 +25,9 @@ public class Account {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @Column(name = "login_attempts")
+    private int loginAttempts;
+
     @Column(name = "active")
     private boolean isActive;
 
@@ -32,6 +36,14 @@ public class Account {
     private List<Transaction> transactionList;
 
     public Account() {
+    }
+
+    public Account(int accountNumber, float balance, Customer customer, int loginAttempts, boolean isActive) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+        this.customer = customer;
+        this.loginAttempts = loginAttempts;
+        this.isActive = isActive;
     }
 
     public int getId() {
@@ -90,14 +102,35 @@ public class Account {
         isActive = active;
     }
 
+    public int getLoginAttempts() {
+        return loginAttempts;
+    }
+
+    public void setLoginAttempts(int loginAttempts) {
+        this.loginAttempts = loginAttempts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return accountNumber == account.accountNumber && Float.compare(account.balance, balance) == 0 && loginAttempts == account.loginAttempts && isActive == account.isActive && customer.equals(account.customer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountNumber, balance, customer, loginAttempts, isActive);
+    }
+
     @Override
     public String toString() {
         return "Account{" +
-                "id=" + id +
                 ", accountNumber=" + accountNumber +
-                ", pinNumber=" + "*******" +
                 ", balance=" + balance +
                 ", customer=" + customer +
+                ", loginAttempts=" + loginAttempts +
+                ", isActive=" + isActive +
                 ", transactionList=" + transactionList +
                 '}';
     }

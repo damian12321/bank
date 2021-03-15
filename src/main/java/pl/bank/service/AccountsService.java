@@ -11,9 +11,9 @@ public interface AccountsService {
 
     public String deleteAccount(int id);
 
-    public Account getAccount(int id);
+    public Account getAccount(int id, int pinNumber);
 
     public Account updateAccount(Account account);
 
-    public String transferMoney(int fromAccount,int pinNumber, int destinationAccount, float amount);
+    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount);
 }

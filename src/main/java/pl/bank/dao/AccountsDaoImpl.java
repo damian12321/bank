@@ -32,39 +32,53 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     @Override
-    public Account createAccount(Account Account) {
+    public Account createAccount(Account account) {
         Session session = sessionFactory.getCurrentSession();
-        Account.setId(0);
-        session.save(Account);
-        return Account;
+        account.setId(0);
+        session.save(account);
+        return account;
     }
 
     @Override
     public String deleteAccount(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Account Account = session.get(Account.class, id);
-        if (Account == null) {
+        Account account = session.get(Account.class, id);
+        if (account == null) {
             throw new CustomException("Account with id: " + id + " not found.");
         }
-        session.delete(Account);
+        session.delete(account);
         return "Account with id: " + id + " has been deleted.";
     }
 
     @Override
-    public Account getAccount(int id) {
+    public Account getAccount(int id, int pinNumber) {
         Session session = sessionFactory.getCurrentSession();
-        Account Account = session.get(Account.class, id);
-        if (Account == null) {
+        Account account = session.get(Account.class, id);
+        if (account == null) {
             throw new CustomException("Account with id: " + id + " not found.");
         }
-        return Account;
+        if (!account.isActive()) {
+            throw new CustomException("Account with id number " + id + " is not active.");
+        }
+        if (account.getPinNumber() != pinNumber) {
+            int loginAttempts = account.getLoginAttempts();
+            if (loginAttempts > 0) {
+                account.setLoginAttempts(--loginAttempts);
+                if (loginAttempts == 0) {
+                    account.setActive(false);
+                }
+                session.save(account);
+            }
+            return null;
+        }
+        return account;
     }
 
     @Override
-    public Account updateAccount(Account Account) {
+    public Account updateAccount(Account account) {
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(Account);
-        return Account;
+        session.saveOrUpdate(account);
+        return account;
     }
 
     @Override
@@ -78,11 +92,20 @@ public class AccountsDaoImpl implements AccountsDao {
             throw new CustomException("Account with number: " + fromAccount + " not found.");
         }
         Account frAccount = query.getResultList().get(0);
-        if (frAccount.getPinNumber() != pinNumber) {
-            throw new CustomException("Pin number is incorrect.");
-        }
+
         if (!frAccount.isActive()) {
             throw new CustomException("Account with number " + fromAccount + " is not active.");
+        }
+        if (frAccount.getPinNumber() != pinNumber) {
+            int loginAttempts = frAccount.getLoginAttempts();
+            if (loginAttempts > 0) {
+                frAccount.setLoginAttempts(--loginAttempts);
+                if (loginAttempts == 0) {
+                    frAccount.setActive(false);
+                }
+                session.save(frAccount);
+            }
+            return null;
         }
         query = session.createQuery("from Account where accountNumber =" + destinationAccount);
         if (query.list().isEmpty()) {
@@ -104,4 +127,5 @@ public class AccountsDaoImpl implements AccountsDao {
         session.save(toAccount);
         return "The money has been transferred from " + fromAccount + " to " + destinationAccount + ".";
     }
+
 }

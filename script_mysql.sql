@@ -14,6 +14,8 @@ CREATE TABLE `accounts` (
 `pin_number` int not null,
 `balance` FLOAT,
 `customer_id` int not null,
+`login_attempts` int default '3',
+`active` boolean not null,
 primary key (`id`),
 KEY `FK_CUSTOMER_ID_idx` (`customer_id`),
 CONSTRAINT `FK_CUSTOMER` 
@@ -26,7 +28,7 @@ CREATE TABLE `transactions` (
 `id` int NOT NULL AUTO_INCREMENT,
 `transaction_type` varchar(20) not null,
 `amount` FLOAT not null,
-`account_id` int not null,
+`account_id` int default null,
 `date` DATETIME not null,
 `description` varchar(64) not null,
 primary key (`id`),

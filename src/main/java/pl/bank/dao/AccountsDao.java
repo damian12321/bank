@@ -11,7 +11,7 @@ public interface AccountsDao {
 
     public String deleteAccount(int id);
 
-    public Account getAccount(int id);
+    public Account getAccount(int id, int pinNumber);
 
     public Account updateAccount(Account account);
 

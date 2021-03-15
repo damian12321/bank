@@ -34,8 +34,8 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public Account getAccount(int id) {
-        return accountsDao.getAccount(id);
+    public Account getAccount(int id, int pinNumber) {
+        return accountsDao.getAccount(id, pinNumber);
     }
 
     @Override

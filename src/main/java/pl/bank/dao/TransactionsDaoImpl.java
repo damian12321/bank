@@ -29,38 +29,38 @@ public class TransactionsDaoImpl implements TransactionsDao {
     }
 
     @Override
-    public Transaction createTransaction(Transaction Transaction) {
+    public Transaction createTransaction(Transaction transaction) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction.setId(0);
-        session.save(Transaction);
-        return Transaction;
+        transaction.setId(0);
+        session.save(transaction);
+        return transaction;
     }
 
     @Override
     public String deleteTransaction(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction Transaction = session.get(Transaction.class, id);
-        if (Transaction == null) {
+        Transaction transaction = session.get(Transaction.class, id);
+        if (transaction == null) {
             throw new CustomException("Transaction with id: " + id + " not found.");
         }
-        session.delete(Transaction);
+        session.delete(transaction);
         return "Transaction with id: " + id + " has been deleted";
     }
 
     @Override
     public Transaction getTransaction(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction Transaction = session.get(Transaction.class, id);
-        if (Transaction == null) {
+        Transaction transaction = session.get(Transaction.class, id);
+        if (transaction == null) {
             throw new CustomException("Transaction with id: " + id + " not found.");
         }
-        return Transaction;
+        return transaction;
     }
 
     @Override
-    public Transaction updateTransaction(Transaction Transaction) {
+    public Transaction updateTransaction(Transaction transaction) {
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(Transaction);
-        return Transaction;
+        session.saveOrUpdate(transaction);
+        return transaction;
     }
 }
