@@ -29,13 +29,13 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public String deleteAccount(int id) {
-        return accountsDao.deleteAccount(id);
+    public String deleteAccount(int accountNumber) {
+        return accountsDao.deleteAccount(accountNumber);
     }
 
     @Override
-    public Account getAccount(int id, int pinNumber) {
-        return accountsDao.getAccount(id, pinNumber);
+    public Account getAccount(int accountNumber, int pinNumber) {
+        return accountsDao.getAccount(accountNumber, pinNumber);
     }
 
     @Override

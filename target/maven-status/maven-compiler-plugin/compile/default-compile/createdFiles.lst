@@ -7,6 +7,8 @@ pl\bank\controllers\AccountsController.class
 pl\bank\service\TransactionsServiceImpl.class
 pl\bank\Test\JDBCTest.class
 pl\bank\service\AccountsServiceImpl.class
+pl\bank\configuration\DemoSecurityConfig.class
+pl\bank\configuration\SecurityWebApplicationInitializer.class
 pl\bank\controllers\TransactionsController.class
 pl\bank\dao\AccountsDao.class
 pl\bank\exception\CustomException.class
@@ -15,6 +17,7 @@ pl\bank\dao\CustomersDao.class
 pl\bank\dao\TransactionsDao.class
 pl\bank\enums\TransactionType.class
 pl\bank\entity\Customer.class
+pl\bank\controllers\TransferController.class
 pl\bank\dao\TransactionsDaoImpl.class
 pl\bank\exception\CustomExceptionHandler.class
 pl\bank\service\CustomersService.class

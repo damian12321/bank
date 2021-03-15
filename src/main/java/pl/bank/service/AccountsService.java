@@ -9,9 +9,9 @@ public interface AccountsService {
 
     public Account createAccount(Account account);
 
-    public String deleteAccount(int id);
+    public String deleteAccount(int accountNumber);
 
-    public Account getAccount(int id, int pinNumber);
+    public Account getAccount(int accountNumber, int pinNumber);
 
     public Account updateAccount(Account account);
 

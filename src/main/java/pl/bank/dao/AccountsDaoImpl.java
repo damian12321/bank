@@ -40,37 +40,41 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     @Override
-    public String deleteAccount(int id) {
+    public String deleteAccount(int accountNumber) {
         Session session = sessionFactory.getCurrentSession();
-        Account account = session.get(Account.class, id);
-        if (account == null) {
-            throw new CustomException("Account with id: " + id + " not found.");
+        Query<Account> query = session.createQuery("from Account where accountNumber =" + accountNumber);
+        if (query.list().isEmpty()) {
+            throw new CustomException("Account with number: " + accountNumber + " not found.");
         }
+        Account account = query.getResultList().get(0);
         session.delete(account);
-        return "Account with id: " + id + " has been deleted.";
+        return "Account with number: " + accountNumber + " has been deleted.";
     }
 
     @Override
-    public Account getAccount(int id, int pinNumber) {
+    public Account getAccount(int accountNumber, int pinNumber) {
         Session session = sessionFactory.getCurrentSession();
-        Account account = session.get(Account.class, id);
-        if (account == null) {
-            throw new CustomException("Account with id: " + id + " not found.");
+        Query<Account> query = session.createQuery("from Account where accountNumber =" + accountNumber);
+        if (query.list().isEmpty()) {
+            throw new CustomException("Account with number: " + accountNumber + " not found.");
         }
-        if (!account.isActive()) {
-            throw new CustomException("Account with id number " + id + " is not active.");
+        Account account = query.getResultList().get(0);
+        if (!account.getIsActive()) {
+            throw new CustomException("Account with number " + accountNumber + " is not active.");
         }
         if (account.getPinNumber() != pinNumber) {
             int loginAttempts = account.getLoginAttempts();
             if (loginAttempts > 0) {
                 account.setLoginAttempts(--loginAttempts);
                 if (loginAttempts == 0) {
-                    account.setActive(false);
+                    account.setIsActive(false);
                 }
                 session.save(account);
             }
             return null;
         }
+        account.setLoginAttempts(3);
+        session.save(account);
         return account;
     }
 
@@ -93,7 +97,7 @@ public class AccountsDaoImpl implements AccountsDao {
         }
         Account frAccount = query.getResultList().get(0);
 
-        if (!frAccount.isActive()) {
+        if (!frAccount.getIsActive()) {
             throw new CustomException("Account with number " + fromAccount + " is not active.");
         }
         if (frAccount.getPinNumber() != pinNumber) {
@@ -101,7 +105,7 @@ public class AccountsDaoImpl implements AccountsDao {
             if (loginAttempts > 0) {
                 frAccount.setLoginAttempts(--loginAttempts);
                 if (loginAttempts == 0) {
-                    frAccount.setActive(false);
+                    frAccount.setIsActive(false);
                 }
                 session.save(frAccount);
             }
@@ -123,6 +127,7 @@ public class AccountsDaoImpl implements AccountsDao {
         list1.add(new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), "Outgoing transfer to account " + destinationAccount + "."));
         List<Transaction> list2 = toAccount.getTransactionList();
         list2.add(new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), "Incoming transfer from account " + fromAccount + "."));
+        frAccount.setLoginAttempts(3);
         session.save(frAccount);
         session.save(toAccount);
         return "The money has been transferred from " + fromAccount + " to " + destinationAccount + ".";

@@ -38,12 +38,14 @@ public class Account {
     public Account() {
     }
 
-    public Account(int accountNumber, float balance, Customer customer, int loginAttempts, boolean isActive) {
+    public Account(int id, int accountNumber, int pinNumber, float balance, Customer customer, int loginAttempts, boolean isActive) {
+        this.id = id;
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.customer = customer;
         this.loginAttempts = loginAttempts;
         this.isActive = isActive;
+        this.pinNumber = pinNumber;
     }
 
     public int getId() {
@@ -94,11 +96,11 @@ public class Account {
         this.transactionList = transactionList;
     }
 
-    public boolean isActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
     }
 
@@ -126,7 +128,7 @@ public class Account {
     @Override
     public String toString() {
         return "Account{" +
-                ", accountNumber=" + accountNumber +
+                "AccountNumber=" + accountNumber +
                 ", balance=" + balance +
                 ", customer=" + customer +
                 ", loginAttempts=" + loginAttempts +
