@@ -2,22 +2,25 @@ package pl.bank.controllers;
 
 
 import com.google.gson.Gson;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
+import org.junit.jupiter.api.*;
+
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
+import org.springframework.test.context.web.WebAppConfiguration;
 import pl.bank.configuration.DemoAppConfig;
-
+import pl.bank.configuration.DemoSecurityConfig;
 import pl.bank.entity.Account;
-
 import java.io.BufferedReader;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
-
 import com.google.gson.reflect.TypeToken;
 import pl.bank.entity.Customer;
+import pl.bank.service.AccountsService;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,11 +32,15 @@ import java.util.List;
 
 
 import static org.junit.jupiter.api.Assertions.*;
-
-//@ExtendWith(SpringExtension.class)
-//@ContextConfiguration(classes = {DemoAppConfig.class})
+@WebAppConfiguration
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {DemoAppConfig.class, DemoSecurityConfig.class}, loader = AnnotationConfigWebContextLoader.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AccountsControllerTest {
+    @Autowired
+    AccountsService accountsService;
     static List<Account> list;
+    static int idNumber=0;
 
     @BeforeAll
     public static void init() throws IOException {
@@ -51,6 +58,7 @@ class AccountsControllerTest {
     }
 
     @Test
+    @Order(1)
     void createAccount() throws IOException {
         URL url = new URL("http://localhost:8080/bank_war/api/account/");
         URLConnection urlConnection = url.openConnection();
@@ -80,12 +88,15 @@ class AccountsControllerTest {
             System.out.println(response.toString());
 
         }
+        idNumber=result.getId();
+        list.add(account);
         assertEquals(account, result);
 
 
     }
 
     @Test
+    @Order(2)
     void updateAccount() throws IOException {
         URL url = new URL("http://localhost:8080/bank_war/api/account/");
         URLConnection urlConnection = url.openConnection();
@@ -97,7 +108,7 @@ class AccountsControllerTest {
         String userPass = "admin" + ":" + "admin";
         String basicAuth = "Basic " + javax.xml.bind.DatatypeConverter.printBase64Binary(userPass.getBytes());
         con.setRequestProperty("Authorization", basicAuth);
-        Account account = new Account(1, 2225, 222, 300.00f, new Customer("Damian", "Juruś"), 3, true);
+        Account account = new Account(idNumber, 22, 223, 300.00f, new Customer("Damian", "Juruś"), 3, true);
         String object = new Gson().toJson(account);
         try (OutputStream os = con.getOutputStream()) {
             byte[] input = object.getBytes("utf-8");
@@ -120,8 +131,9 @@ class AccountsControllerTest {
 
 
     @Test
+    @Order(3)
     void getAccount() throws IOException {
-        URL url = new URL("http://localhost:8080/bank_war/api/account/22/222");
+        URL url = new URL("http://localhost:8080/bank_war/api/account/22/223");
         URLConnection urlConnection = url.openConnection();
         HttpURLConnection con = (HttpURLConnection) urlConnection;
         con.setRequestMethod("GET");
@@ -135,6 +147,7 @@ class AccountsControllerTest {
     }
 
     @Test
+    @Order(4)
     void getAccounts() throws IOException {
         URL url = new URL("http://localhost:8080/bank_war/api/account/");
         URLConnection urlConnection = url.openConnection();
@@ -147,12 +160,11 @@ class AccountsControllerTest {
         Type listType = new TypeToken<ArrayList<Account>>() {
         }.getType();
         List<Account> list1 = new Gson().fromJson(inputStreamReader, listType);
-        Account account = new Account(1, 2225, 222, 300.00f, new Customer("Damian", "Juruś"), 3, true);
-        list1.add(account);
-        assertEquals(list, list1);
+        assertEquals(list,list1);
     }
 
     @Test
+    @Order(5)
     void deleteAccount() throws IOException {
         URL url = new URL("http://localhost:8080/bank_war/api/account/22");
         URLConnection urlConnection = url.openConnection();
