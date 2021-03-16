@@ -3,10 +3,7 @@ package pl.bank.configuration;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -20,6 +17,7 @@ import java.util.logging.Logger;
 
 @Configuration
 @EnableWebMvc
+@EnableAspectJAutoProxy
 @EnableTransactionManagement
 @ComponentScan("pl.bank")
 @PropertySource({ "classpath:persistence-mysql.properties" })

@@ -13,6 +13,8 @@ public interface AccountsService {
 
     public Account getAccount(int accountNumber, int pinNumber);
 
+    public Account getAccountByOnlyAccountNumber(int accountNumber);
+
     public Account updateAccount(Account account);
 
     public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount);

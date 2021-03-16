@@ -1,3 +1,4 @@
+pl\bank\aspect\LoggingAspect.class
 pl\bank\entity\Account.class
 pl\bank\service\AccountsService.class
 pl\bank\dao\AccountsDaoImpl.class

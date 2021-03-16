@@ -14,6 +14,7 @@ import pl.bank.configuration.DemoSecurityConfig;
 import pl.bank.entity.Account;
 import pl.bank.entity.Customer;
 import pl.bank.exception.CustomException;
+import pl.bank.exception.PinNumberException;
 import pl.bank.service.AccountsService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,12 +42,12 @@ class TransferControllerTest {
         String answer = accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber(), account2.getAccountNumber(), account1.getBalance());
         String expected = "The money has been transferred from " + account1.getAccountNumber() + " to " + account2.getAccountNumber() + ".";
         assertEquals(expected, answer);
-        answer = accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance());
-        assertNull(answer);
-        answer = accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance());
-        assertNull(answer);
-        answer = accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance());
-        assertNull(answer);
+        assertThrows(PinNumberException.class, () ->
+                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
+        assertThrows(PinNumberException.class, () ->
+                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
+        assertThrows(PinNumberException.class, () ->
+                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
         assertThrows(CustomException.class, () ->
                 accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
         accountsService.deleteAccount(accountNumber1);

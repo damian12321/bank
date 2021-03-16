@@ -39,3 +39,8 @@ REFERENCES `accounts` (`id`)
 ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 SET FOREIGN_KEY_CHECKS = 1;
+-- Populate some values 
+INSERT INTO customers VALUES(1,"Damian","Juruś");
+INSERT INTO customers VALUES(2,"Adrian","Juruś");
+INSERT INTO accounts VALUES(1,200,2000,200,1,3,1);
+INSERT INTO accounts VALUES(2,201,2000,200,2,3,1)

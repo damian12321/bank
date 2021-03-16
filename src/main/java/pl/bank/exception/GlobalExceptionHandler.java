@@ -9,15 +9,22 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
     @ExceptionHandler(CustomException.class)
     private ResponseEntity<CustomExceptionHandler> handleException(CustomException e) {
-        CustomExceptionHandler studentExceptionHandler = new CustomExceptionHandler(HttpStatus.NOT_FOUND.value(), e.getMessage());
-        ResponseEntity<CustomExceptionHandler> responseEntity = new ResponseEntity<>(studentExceptionHandler, HttpStatus.NOT_FOUND);
+        CustomExceptionHandler customExceptionHandler = new CustomExceptionHandler(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        ResponseEntity<CustomExceptionHandler> responseEntity = new ResponseEntity<>(customExceptionHandler, HttpStatus.NOT_FOUND);
+        return responseEntity;
+    }
+    @ExceptionHandler(PinNumberException.class)
+    private ResponseEntity<CustomExceptionHandler> handleException(PinNumberException e) {
+        CustomExceptionHandler customExceptionHandler = new CustomExceptionHandler(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
+        ResponseEntity<CustomExceptionHandler> responseEntity = new ResponseEntity<>(customExceptionHandler, HttpStatus.UNAUTHORIZED);
         return responseEntity;
     }
 
+
     @ExceptionHandler
     private ResponseEntity<CustomExceptionHandler> handleException(Exception e) {
-        CustomExceptionHandler studentExceptionHandler = new CustomExceptionHandler(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-        ResponseEntity<CustomExceptionHandler> responseEntity = new ResponseEntity<>(studentExceptionHandler, HttpStatus.BAD_REQUEST);
+        CustomExceptionHandler customExceptionHandler = new CustomExceptionHandler(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        ResponseEntity<CustomExceptionHandler> responseEntity = new ResponseEntity<>(customExceptionHandler, HttpStatus.BAD_REQUEST);
         return responseEntity;
     }
 }

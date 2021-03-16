@@ -9,6 +9,7 @@ import pl.bank.entity.Account;
 import pl.bank.entity.Transaction;
 import pl.bank.enums.TransactionType;
 import pl.bank.exception.CustomException;
+import pl.bank.exception.PinNumberException;
 
 import java.util.Date;
 import java.util.List;
@@ -63,18 +64,18 @@ public class AccountsDaoImpl implements AccountsDao {
             throw new CustomException("Account with number " + accountNumber + " is not active.");
         }
         if (account.getPinNumber() != pinNumber) {
-            int loginAttempts = account.getLoginAttempts();
-            if (loginAttempts > 0) {
-                account.setLoginAttempts(--loginAttempts);
-                if (loginAttempts == 0) {
-                    account.setIsActive(false);
-                }
-                session.save(account);
-            }
-            return null;
+            throw new PinNumberException("Pin number is incorrect.");
         }
         account.setLoginAttempts(3);
         session.save(account);
+        return account;
+    }
+
+    @Override
+    public Account getAccountByOnlyAccountNumber(int accountNumber) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Account> query = session.createQuery("from Account where accountNumber =" + accountNumber);
+        Account account = query.getResultList().get(0);
         return account;
     }
 
@@ -86,7 +87,7 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     @Override
-    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount) {
+    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount){
         if (fromAccount == destinationAccount || amount <= 0) {
             throw new CustomException("Incorrect values.");
         }
@@ -101,15 +102,7 @@ public class AccountsDaoImpl implements AccountsDao {
             throw new CustomException("Account with number " + fromAccount + " is not active.");
         }
         if (frAccount.getPinNumber() != pinNumber) {
-            int loginAttempts = frAccount.getLoginAttempts();
-            if (loginAttempts > 0) {
-                frAccount.setLoginAttempts(--loginAttempts);
-                if (loginAttempts == 0) {
-                    frAccount.setIsActive(false);
-                }
-                session.save(frAccount);
-            }
-            return null;
+            throw new PinNumberException("Pin number is incorrect.");
         }
         query = session.createQuery("from Account where accountNumber =" + destinationAccount);
         if (query.list().isEmpty()) {

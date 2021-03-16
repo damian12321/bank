@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.bank.dao.AccountsDao;
 import pl.bank.entity.Account;
+import pl.bank.exception.PinNumberException;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(dontRollbackOn = {PinNumberException.class})
 public class AccountsServiceImpl implements AccountsService {
     private AccountsDao accountsDao;
 
@@ -39,10 +40,16 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
+    public Account getAccountByOnlyAccountNumber(int accountNumber) {
+        return accountsDao.getAccountByOnlyAccountNumber(accountNumber);
+    }
+
+    @Override
     public Account updateAccount(Account account) {
         return accountsDao.updateAccount(account);
     }
 
+    @Override
     public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount) {
         return accountsDao.transferMoney(fromAccount, pinNumber, destinationAccount, amount);
     }

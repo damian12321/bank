@@ -12,6 +12,7 @@ import pl.bank.configuration.DemoSecurityConfig;
 import pl.bank.entity.Account;
 import pl.bank.entity.Customer;
 import pl.bank.exception.CustomException;
+import pl.bank.exception.PinNumberException;
 import pl.bank.service.AccountsService;
 
 import java.util.List;
@@ -61,12 +62,9 @@ class AccountsControllerTest {
         Account account = new Account(idNumber, accountNumber, 223, 300.00f, new Customer("Damian", "Juruś"));
         Account answer = accountsService.getAccount(accountNumber, 223);
         assertEquals(account, answer);
-        account = accountsService.getAccount(accountNumber, 224);
-        assertNull(account);
-        account = accountsService.getAccount(accountNumber, 224);
-        assertNull(account);
-        account = accountsService.getAccount(accountNumber, 224);
-        assertNull(account);
+        assertThrows(PinNumberException.class, () -> accountsService.getAccount(accountNumber, 224));
+        assertThrows(PinNumberException.class, () -> accountsService.getAccount(accountNumber, 224));
+        assertThrows(PinNumberException.class, () -> accountsService.getAccount(accountNumber, 224));
         assertThrows(CustomException.class, () -> accountsService.getAccount(accountNumber, 224));
     }
 
