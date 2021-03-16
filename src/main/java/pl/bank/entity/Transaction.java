@@ -4,6 +4,7 @@ import pl.bank.enums.TransactionType;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 
 @Entity
@@ -31,6 +32,14 @@ public class Transaction {
     }
 
     public Transaction(TransactionType transactionType, float amount, Date date, String description) {
+        this.transactionType = transactionType;
+        this.date = date;
+        this.description = description;
+        this.amount = amount;
+    }
+
+    public Transaction(int id, TransactionType transactionType, float amount, Date date, String description) {
+        this.id = id;
         this.transactionType = transactionType;
         this.date = date;
         this.description = description;
@@ -76,6 +85,19 @@ public class Transaction {
 
     public void setAmount(float amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return id == that.id && Float.compare(that.amount, amount) == 0 && transactionType == that.transactionType && description.equals(that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, transactionType, amount, description);
     }
 
     @Override

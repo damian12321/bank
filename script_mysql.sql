@@ -15,7 +15,7 @@ CREATE TABLE `accounts` (
 `balance` FLOAT,
 `customer_id` int not null,
 `login_attempts` int default '3',
-`active` boolean not null,
+`active` BOOL default false,
 primary key (`id`),
 KEY `FK_CUSTOMER_ID_idx` (`customer_id`),
 CONSTRAINT `FK_CUSTOMER` 

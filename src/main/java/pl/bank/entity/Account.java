@@ -38,13 +38,13 @@ public class Account {
     public Account() {
     }
 
-    public Account(int id, int accountNumber, int pinNumber, float balance, Customer customer, int loginAttempts, boolean isActive) {
+    public Account(int id, int accountNumber, int pinNumber, float balance, Customer customer) {
         this.id = id;
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.customer = customer;
-        this.loginAttempts = loginAttempts;
-        this.isActive = isActive;
+        this.loginAttempts = 3;
+        this.isActive = true;
         this.pinNumber = pinNumber;
     }
 
