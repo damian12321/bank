@@ -12,7 +12,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import pl.bank.configuration.DemoAppConfig;
 import pl.bank.configuration.DemoSecurityConfig;
 import pl.bank.entity.Account;
-import pl.bank.entity.Customer;
 import pl.bank.exception.CustomException;
 import pl.bank.exception.PinNumberException;
 import pl.bank.service.AccountsService;
@@ -35,8 +34,8 @@ class TransferControllerTest {
 
     @Test
     void transferMoney() {
-        Account account1 = new Account(1, accountNumber1, 222, 300.00f, new Customer("Damian", "Juruś"));
-        Account account2 = new Account(1, accountNumber2, 222, 300.00f, new Customer("Damian", "Juruś"));
+        Account account1 = new Account(1, accountNumber1, 222, 300.00f);
+        Account account2 = new Account(1, accountNumber2, 222, 300.00f);
         accountsService.createAccount(account1);
         accountsService.createAccount(account2);
         String answer = accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber(), account2.getAccountNumber(), account1.getBalance());

@@ -40,7 +40,7 @@ class AccountsControllerTest {
     @Test
     @Order(1)
     void createAccount() {
-        Account account = new Account(1, accountNumber, 222, 300.00f, new Customer("Damian", "Juruś"));
+        Account account = new Account(1, accountNumber, 222, 300.00f);
         Account answer = accountsService.createAccount(account);
         idNumber = answer.getId();
         assertEquals(account, answer);
@@ -50,7 +50,7 @@ class AccountsControllerTest {
     @Test
     @Order(2)
     void updateAccount() {
-        Account account = new Account(idNumber, accountNumber, 223, 300.00f, new Customer("Damian", "Juruś"));
+        Account account = new Account(idNumber, accountNumber, 223, 300.00f);
         Account answer = accountsService.updateAccount(account);
         assertEquals(account, answer);
     }
@@ -59,7 +59,7 @@ class AccountsControllerTest {
     @Test
     @Order(3)
     void getAccount() {
-        Account account = new Account(idNumber, accountNumber, 223, 300.00f, new Customer("Damian", "Juruś"));
+        Account account = new Account(idNumber, accountNumber, 223, 300.00f);
         Account answer = accountsService.getAccount(accountNumber, 223);
         assertEquals(account, answer);
         assertThrows(PinNumberException.class, () -> accountsService.getAccount(accountNumber, 224));

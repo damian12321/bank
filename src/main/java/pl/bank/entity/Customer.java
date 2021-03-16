@@ -17,13 +17,22 @@ public class Customer {
     @Column(name = "last_name")
     private String lastName;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
+    private Account account;
+
+    @Column(name = "password")
+    private String password;
+
     public Customer() {
     }
 
-    public Customer(int id, String firstName, String lastName) {
+    public Customer(int id, String firstName, String lastName, Account account, String password) {
+        this.account = account;
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.password = password;
     }
 
     public Customer(String firstName, String lastName) {
@@ -55,17 +64,33 @@ public class Customer {
         this.lastName = lastName;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return firstName.equals(customer.firstName) && lastName.equals(customer.lastName);
+        return firstName.equals(customer.firstName) && lastName.equals(customer.lastName) && account.equals(customer.account);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName);
+        return Objects.hash(firstName, lastName, account);
     }
 
     @Override

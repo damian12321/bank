@@ -21,10 +21,6 @@ public class Account {
     @Column(name = "balance")
     private float balance;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
     @Column(name = "login_attempts")
     private int loginAttempts;
 
@@ -38,11 +34,17 @@ public class Account {
     public Account() {
     }
 
-    public Account(int id, int accountNumber, int pinNumber, float balance, Customer customer) {
+    public Account(int id, int accountNumber, int pinNumber, float balance) {
         this.id = id;
         this.accountNumber = accountNumber;
         this.balance = balance;
-        this.customer = customer;
+        this.loginAttempts = 3;
+        this.isActive = true;
+        this.pinNumber = pinNumber;
+    }
+    public Account(int accountNumber, int pinNumber, float balance) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
         this.loginAttempts = 3;
         this.isActive = true;
         this.pinNumber = pinNumber;
@@ -80,14 +82,6 @@ public class Account {
         this.balance = balance;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     public List<Transaction> getTransactionList() {
         return transactionList;
     }
@@ -117,12 +111,12 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return accountNumber == account.accountNumber && Float.compare(account.balance, balance) == 0 && loginAttempts == account.loginAttempts && isActive == account.isActive && customer.equals(account.customer);
+        return accountNumber == account.accountNumber && Float.compare(account.balance, balance) == 0 && loginAttempts == account.loginAttempts && isActive == account.isActive;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountNumber, balance, customer, loginAttempts, isActive);
+        return Objects.hash(accountNumber, balance, loginAttempts, isActive);
     }
 
     @Override
@@ -130,7 +124,6 @@ public class Account {
         return "Account{" +
                 "AccountNumber=" + accountNumber +
                 ", balance=" + balance +
-                ", customer=" + customer +
                 ", loginAttempts=" + loginAttempts +
                 ", isActive=" + isActive +
                 ", transactionList=" + transactionList +

@@ -1,9 +1,6 @@
 package pl.bank.controllers;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,7 +9,9 @@ import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.bank.configuration.DemoAppConfig;
 import pl.bank.configuration.DemoSecurityConfig;
+import pl.bank.entity.Account;
 import pl.bank.entity.Customer;
+import pl.bank.service.AccountsService;
 import pl.bank.service.CustomersService;
 
 import java.util.List;
@@ -25,19 +24,25 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CustomersControllerTest {
     static CustomersService customersService;
+    static AccountsService accountsService;
     static int idNumber = 0;
     static List<Customer> list;
+    static Account account1;
+    static Account account2;
 
     @Autowired
-    public void setCustomersService(CustomersService customersService) {
+    public void setCustomersService(CustomersService customersService,AccountsService accountsService) {
         CustomersControllerTest.customersService = customersService;
+        CustomersControllerTest.accountsService=accountsService;
         list = customersService.getCustomers();
+        account1= new Account(1234, 222, 300.00f);
+        account2= new Account(1235, 222, 300.00f);
     }
 
     @Test
     @Order(1)
     void createCustomer() {
-        Customer customer = new Customer(1, "Damian", "Juruś");
+        Customer customer = new Customer(1, "Damian", "Juruś",account1,"1234");
         Customer answer = customersService.createCustomer(customer);
         idNumber = answer.getId();
         assertEquals(customer, answer);
@@ -46,7 +51,7 @@ class CustomersControllerTest {
     @Test
     @Order(2)
     void updateCustomer() {
-        Customer customer = new Customer(idNumber, "Damian", "Jurus");
+        Customer customer = new Customer(idNumber, "Damian", "Juruś",account2,"12345");
         Customer answer = customersService.updateCustomer(customer);
         assertEquals(customer, answer);
     }
@@ -55,7 +60,7 @@ class CustomersControllerTest {
     @Test
     @Order(3)
     void getCustomer() {
-        Customer customer = new Customer(idNumber, "Damian", "Jurus");
+        Customer customer = new Customer(1, "Damian", "Juruś",account2,"1234");
         Customer answer = customersService.getCustomer(idNumber);
         assertEquals(customer, answer);
     }
@@ -73,5 +78,14 @@ class CustomersControllerTest {
     void getCustomers() {
         List<Customer> answer = customersService.getCustomers();
         assertEquals(list, answer);
+    }
+    @AfterAll //cleaning accounts(account number is unique so we must update
+    public static void reset()
+    {
+        List<Account> list = accountsService.getAccounts();
+        if(list.contains(account1))
+        accountsService.deleteAccount(account1.getAccountNumber());
+        if(list.contains(account2))
+        accountsService.deleteAccount(account2.getAccountNumber());
     }
 }
