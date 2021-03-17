@@ -19,6 +19,7 @@ pl\bank\dao\TransactionsDao.class
 pl\bank\enums\TransactionType.class
 pl\bank\entity\Customer.class
 pl\bank\controllers\TransferController.class
+pl\bank\exception\NoAccessException.class
 pl\bank\dao\TransactionsDaoImpl.class
 pl\bank\exception\CustomExceptionHandler.class
 pl\bank\service\CustomersService.class

@@ -8,10 +8,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.bank.entity.Account;
-import pl.bank.exception.PinNumberException;
+import pl.bank.exception.NoAccessException;
 import pl.bank.service.AccountsService;
-
-import java.util.logging.Logger;
 
 @Aspect
 @Component
@@ -34,7 +32,7 @@ public class LoggingAspect {
         Object result=null;
         try {
             result = proceedingJoinPoint.proceed();
-        }catch (PinNumberException e)
+        }catch (NoAccessException e)
         {
 
             Object[]objects=proceedingJoinPoint.getArgs();
@@ -48,7 +46,7 @@ public class LoggingAspect {
                     }
                     accountsService.updateAccount(account);
                 }
-                throw new PinNumberException(e.getMessage());
+                throw new NoAccessException(e.getMessage());
             }
 
         return result;

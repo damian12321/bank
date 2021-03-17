@@ -1,9 +1,6 @@
 package pl.bank.controllers;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,6 +9,7 @@ import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.bank.configuration.DemoAppConfig;
 import pl.bank.configuration.DemoSecurityConfig;
+import pl.bank.entity.Account;
 import pl.bank.entity.Transaction;
 import pl.bank.enums.TransactionType;
 import pl.bank.exception.CustomException;
@@ -77,5 +75,13 @@ class TransactionsControllerTest {
     void getTransactions() {
         List<Transaction> answer = transactionsService.getTransactions();
         assertEquals(list, answer);
+    }
+    @AfterAll //cleaning transaction
+    public static void reset()
+    {
+        List<Transaction> list = transactionsService.getTransactions();
+        Transaction transaction = new Transaction(transactionNumber, TransactionType.WITHDRAWAL, 100, new Date(), "Description");
+        if(list.contains(transaction))
+            transactionsService.deleteTransaction(transactionNumber);
     }
 }

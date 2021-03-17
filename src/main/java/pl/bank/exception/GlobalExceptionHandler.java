@@ -13,8 +13,8 @@ public class GlobalExceptionHandler {
         ResponseEntity<CustomExceptionHandler> responseEntity = new ResponseEntity<>(customExceptionHandler, HttpStatus.NOT_FOUND);
         return responseEntity;
     }
-    @ExceptionHandler(PinNumberException.class)
-    private ResponseEntity<CustomExceptionHandler> handleException(PinNumberException e) {
+    @ExceptionHandler(NoAccessException.class)
+    private ResponseEntity<CustomExceptionHandler> handleException(NoAccessException e) {
         CustomExceptionHandler customExceptionHandler = new CustomExceptionHandler(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
         ResponseEntity<CustomExceptionHandler> responseEntity = new ResponseEntity<>(customExceptionHandler, HttpStatus.UNAUTHORIZED);
         return responseEntity;

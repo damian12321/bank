@@ -28,9 +28,9 @@ public class CustomersController {
         return customersService.getCustomers();
     }
 
-    @GetMapping("/customer/{customerId}")
-    public Customer getCustomer(@PathVariable int customerId) {
-        return customersService.getCustomer(customerId);
+    @GetMapping("/customer/{customerId}/{customerPassword}")
+    public Customer getCustomer(@PathVariable int customerId, @PathVariable String customerPassword) {
+        return customersService.getCustomer(customerId, customerPassword);
     }
 
     @DeleteMapping("/customer/{customerId}")

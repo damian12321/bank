@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.bank.entity.Customer;
 import pl.bank.exception.CustomException;
+import pl.bank.exception.NoAccessException;
 
 import java.util.List;
 
@@ -48,11 +49,14 @@ public class CustomersDaoImpl implements CustomersDao {
     }
 
     @Override
-    public Customer getCustomer(int id) {
+    public Customer getCustomer(int id, String customerPassword) {
         Session session = sessionFactory.getCurrentSession();
         Customer customer=session.get(Customer.class,id);
         if (customer == null) {
             throw new CustomException("Customer with id: " + id+" not found.");
+        }
+        if (!customer.getPassword().equals(customerPassword)) {
+            throw new NoAccessException("Password is not correct.");
         }
         return customer;
     }

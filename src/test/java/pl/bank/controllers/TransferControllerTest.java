@@ -13,7 +13,7 @@ import pl.bank.configuration.DemoAppConfig;
 import pl.bank.configuration.DemoSecurityConfig;
 import pl.bank.entity.Account;
 import pl.bank.exception.CustomException;
-import pl.bank.exception.PinNumberException;
+import pl.bank.exception.NoAccessException;
 import pl.bank.service.AccountsService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,11 +41,13 @@ class TransferControllerTest {
         String answer = accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber(), account2.getAccountNumber(), account1.getBalance());
         String expected = "The money has been transferred from " + account1.getAccountNumber() + " to " + account2.getAccountNumber() + ".";
         assertEquals(expected, answer);
-        assertThrows(PinNumberException.class, () ->
+        assertThrows(CustomException.class, () ->
+                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber(), account2.getAccountNumber(), account1.getBalance()+200));
+        assertThrows(NoAccessException.class, () ->
                 accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
-        assertThrows(PinNumberException.class, () ->
+        assertThrows(NoAccessException.class, () ->
                 accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
-        assertThrows(PinNumberException.class, () ->
+        assertThrows(NoAccessException.class, () ->
                 accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
         assertThrows(CustomException.class, () ->
                 accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));

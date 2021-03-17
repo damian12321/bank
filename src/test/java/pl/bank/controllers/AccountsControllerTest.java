@@ -10,9 +10,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import pl.bank.configuration.DemoAppConfig;
 import pl.bank.configuration.DemoSecurityConfig;
 import pl.bank.entity.Account;
-import pl.bank.entity.Customer;
 import pl.bank.exception.CustomException;
-import pl.bank.exception.PinNumberException;
+import pl.bank.exception.NoAccessException;
 import pl.bank.service.AccountsService;
 
 import java.util.List;
@@ -62,9 +61,9 @@ class AccountsControllerTest {
         Account account = new Account(idNumber, accountNumber, 223, 300.00f);
         Account answer = accountsService.getAccount(accountNumber, 223);
         assertEquals(account, answer);
-        assertThrows(PinNumberException.class, () -> accountsService.getAccount(accountNumber, 224));
-        assertThrows(PinNumberException.class, () -> accountsService.getAccount(accountNumber, 224));
-        assertThrows(PinNumberException.class, () -> accountsService.getAccount(accountNumber, 224));
+        assertThrows(NoAccessException.class, () -> accountsService.getAccount(accountNumber, 224));
+        assertThrows(NoAccessException.class, () -> accountsService.getAccount(accountNumber, 224));
+        assertThrows(NoAccessException.class, () -> accountsService.getAccount(accountNumber, 224));
         assertThrows(CustomException.class, () -> accountsService.getAccount(accountNumber, 224));
     }
 
@@ -82,6 +81,15 @@ class AccountsControllerTest {
     void getAccounts() {
         List<Account> answer = accountsService.getAccounts();
         assertEquals(list, answer);
+    }
+    @AfterAll //cleaning accounts
+    public static void reset()
+    {
+        List<Account> list = accountsService.getAccounts();
+        Account account = new Account(idNumber, accountNumber, 223, 300.00f);
+        if(list.contains(account))
+            accountsService.deleteAccount(account.getAccountNumber());
+
     }
 
 

@@ -11,7 +11,7 @@ public interface CustomersDao {
 
     public String deleteCustomer(int id);
 
-    public Customer getCustomer(int id);
+    public Customer getCustomer(int id, String customerPassword);
 
     public Customer updateCustomer(Customer customer);
 }

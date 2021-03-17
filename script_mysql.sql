@@ -9,7 +9,7 @@ CREATE TABLE `accounts` (
 `login_attempts` int default '3',
 `active` BOOL default false,
 primary key (`id`)
-);
+)AUTO_INCREMENT=1000;
 CREATE TABLE `customers` (
 `id` int NOT NULL AUTO_INCREMENT,
 `first_name` varchar(30) not null,
@@ -21,7 +21,7 @@ KEY `FK_ACCOUNTS_ID_idx` (`account_id`),
 CONSTRAINT `FK_ACCOUNTID` 
 FOREIGN KEY (`account_id`) 
 REFERENCES `accounts` (`id`) 
-);
+)AUTO_INCREMENT=1000;
 CREATE TABLE `transactions` (
 `id` int NOT NULL AUTO_INCREMENT,
 `transaction_type` varchar(20) not null,

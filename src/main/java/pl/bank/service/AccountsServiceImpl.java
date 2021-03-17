@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.bank.dao.AccountsDao;
 import pl.bank.entity.Account;
-import pl.bank.exception.PinNumberException;
+import pl.bank.exception.NoAccessException;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(dontRollbackOn = {PinNumberException.class})
+@Transactional(dontRollbackOn = {NoAccessException.class})
 public class AccountsServiceImpl implements AccountsService {
     private AccountsDao accountsDao;
 

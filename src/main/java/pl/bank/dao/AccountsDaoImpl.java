@@ -9,7 +9,7 @@ import pl.bank.entity.Account;
 import pl.bank.entity.Transaction;
 import pl.bank.enums.TransactionType;
 import pl.bank.exception.CustomException;
-import pl.bank.exception.PinNumberException;
+import pl.bank.exception.NoAccessException;
 
 import java.util.Date;
 import java.util.List;
@@ -64,7 +64,7 @@ public class AccountsDaoImpl implements AccountsDao {
             throw new CustomException("Account with number " + accountNumber + " is not active.");
         }
         if (account.getPinNumber() != pinNumber) {
-            throw new PinNumberException("Pin number is incorrect.");
+            throw new NoAccessException("Pin number is incorrect.");
         }
         account.setLoginAttempts(3);
         session.save(account);
@@ -102,7 +102,7 @@ public class AccountsDaoImpl implements AccountsDao {
             throw new CustomException("Account with number " + fromAccount + " is not active.");
         }
         if (frAccount.getPinNumber() != pinNumber) {
-            throw new PinNumberException("Pin number is incorrect.");
+            throw new NoAccessException("Pin number is incorrect.");
         }
         query = session.createQuery("from Account where accountNumber =" + destinationAccount);
         if (query.list().isEmpty()) {

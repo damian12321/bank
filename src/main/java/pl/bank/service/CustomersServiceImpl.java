@@ -34,8 +34,8 @@ public class CustomersServiceImpl implements CustomersService {
     }
 
     @Override
-    public Customer getCustomer(int id) {
-        return customersDao.getCustomer(id);
+    public Customer getCustomer(int id, String customerPassword) {
+        return customersDao.getCustomer(id, customerPassword);
     }
 
     @Override
