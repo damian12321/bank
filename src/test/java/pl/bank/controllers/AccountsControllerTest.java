@@ -82,6 +82,19 @@ class AccountsControllerTest {
         List<Account> answer = accountsService.getAccounts();
         assertEquals(list, answer);
     }
+    @Test
+    @Order(6)
+    void getFreeAccountNumber() {
+        int number= accountsService.getFreeAccountNumber();
+        int highestNumber = 1;
+        for (Account account : list) {
+            if (account.getAccountNumber() > highestNumber) {
+                highestNumber = account.getAccountNumber();
+            }
+        }
+        int answer=accountsService.getFreeAccountNumber();
+        assertEquals(++highestNumber, answer);
+    }
     @AfterAll //cleaning accounts
     public static void reset()
     {

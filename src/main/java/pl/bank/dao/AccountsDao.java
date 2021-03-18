@@ -18,4 +18,6 @@ public interface AccountsDao {
     public Account updateAccount(Account account);
 
     public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount);
+
+    public int getFreeAccountNumber();
 }

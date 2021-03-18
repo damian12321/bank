@@ -87,7 +87,7 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     @Override
-    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount){
+    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount) {
         if (fromAccount == destinationAccount || amount <= 0) {
             throw new CustomException("Incorrect values.");
         }
@@ -125,5 +125,20 @@ public class AccountsDaoImpl implements AccountsDao {
         session.save(toAccount);
         return "The money has been transferred from " + fromAccount + " to " + destinationAccount + ".";
     }
+
+    @Override
+    public int getFreeAccountNumber() {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Account> query = session.createQuery("from Account", Account.class);
+        List<Account> list = query.getResultList();
+        int highestNumber = 1;
+        for (Account account : list) {
+            if (account.getAccountNumber() > highestNumber) {
+                highestNumber = account.getAccountNumber();
+            }
+        }
+        return ++highestNumber;
+    }
+
 
 }

@@ -48,5 +48,10 @@ public class AccountsController {
         return accountsService.createAccount(account);
     }
 
+    @GetMapping("/account/number")
+    public int getFreeAccountNumber() {
+        return accountsService.getFreeAccountNumber();
+    }
+
 
 }

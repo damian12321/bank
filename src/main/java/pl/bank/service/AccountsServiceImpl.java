@@ -53,4 +53,9 @@ public class AccountsServiceImpl implements AccountsService {
     public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount) {
         return accountsDao.transferMoney(fromAccount, pinNumber, destinationAccount, amount);
     }
+
+    @Override
+    public int getFreeAccountNumber() {
+        return accountsDao.getFreeAccountNumber();
+    }
 }
