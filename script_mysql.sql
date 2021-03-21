@@ -38,7 +38,7 @@ ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 SET FOREIGN_KEY_CHECKS = 1;
 -- Populate some values 
-INSERT INTO accounts VALUES(1,200,2000,200,3,1);
-INSERT INTO accounts VALUES(2,201,2000,200,3,1);
-INSERT INTO customers VALUES(1,"Damian","Juruś",1,"1234");
-INSERT INTO customers VALUES(2,"Adrian","Juruś",2,"1234");
+INSERT INTO accounts VALUES(10,200,2000,200,3,1);
+INSERT INTO accounts VALUES(11,201,2000,200,3,1);
+INSERT INTO customers VALUES(10,"Damian","Juruś",10,"1234");
+INSERT INTO customers VALUES(11,"Adrian","Juruś",11,"1234");

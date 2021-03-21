@@ -2,6 +2,7 @@ package pl.bank.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import pl.bank.dao.AccountsDao;
 import pl.bank.entity.Account;
 import pl.bank.exception.NoAccessException;
@@ -50,12 +51,21 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount) {
-        return accountsDao.transferMoney(fromAccount, pinNumber, destinationAccount, amount);
+    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount, String description) {
+        return accountsDao.transferMoney(fromAccount, pinNumber, destinationAccount, amount, description);
     }
 
     @Override
     public int getFreeAccountNumber() {
         return accountsDao.getFreeAccountNumber();
+    }
+
+    @Override
+    public String depositMoney(int accountNumber, int pinNumber, float amount) {
+        return accountsDao.depositMoney(accountNumber, pinNumber, amount);
+    }
+    @Override
+    public String withdrawMoney(int accountNumber, int pinNumber, float amount) {
+        return accountsDao.withdrawMoney(accountNumber, pinNumber, amount);
     }
 }

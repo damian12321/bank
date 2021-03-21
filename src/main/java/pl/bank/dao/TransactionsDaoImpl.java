@@ -23,7 +23,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
     @Override
     public List<Transaction> getTransactions() {
         Session session = sessionFactory.getCurrentSession();
-        Query<Transaction> query = session.createQuery("from Transaction", Transaction.class);
+        Query<Transaction> query = session.createQuery("from Transaction ORDER BY date DESC", Transaction.class);
         List<Transaction> list = query.getResultList();
         return list;
     }

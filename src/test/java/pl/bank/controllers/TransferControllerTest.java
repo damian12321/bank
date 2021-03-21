@@ -35,23 +35,60 @@ class TransferControllerTest {
     @Test
     void transferMoney() {
         Account account1 = new Account(1, accountNumber1, 222, 300.00f);
-        Account account2 = new Account(1, accountNumber2, 222, 300.00f);
+        Account account2 = new Account(2, accountNumber2, 222, 300.00f);
         accountsService.createAccount(account1);
         accountsService.createAccount(account2);
-        String answer = accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber(), account2.getAccountNumber(), account1.getBalance());
+        String answer = accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber(), account2.getAccountNumber(), account1.getBalance(),"");
         String expected = "The money has been transferred from " + account1.getAccountNumber() + " to " + account2.getAccountNumber() + ".";
         assertEquals(expected, answer);
         assertThrows(CustomException.class, () ->
-                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber(), account2.getAccountNumber(), account1.getBalance()+200));
+                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber(), account2.getAccountNumber(), account1.getBalance()+200,""));
         assertThrows(NoAccessException.class, () ->
-                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
+                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance(),""));
         assertThrows(NoAccessException.class, () ->
-                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
+                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance(),""));
         assertThrows(NoAccessException.class, () ->
-                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
+                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance(),""));
         assertThrows(CustomException.class, () ->
-                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber() + 1, account2.getAccountNumber(), account1.getBalance()));
+                accountsService.transferMoney(account1.getAccountNumber(), account1.getPinNumber(), account2.getAccountNumber(), account1.getBalance(),""));
         accountsService.deleteAccount(accountNumber1);
         accountsService.deleteAccount(accountNumber2);
     }
+    @Test
+    void depositMoney() {
+        Account account1 = new Account(1, accountNumber1, 222, 300.00f);
+        accountsService.createAccount(account1);
+        String answer = accountsService.depositMoney(account1.getAccountNumber(), account1.getPinNumber(), account1.getBalance());
+        String expected = "Deposit has been completed.";
+        assertEquals(expected, answer);
+        assertThrows(NoAccessException.class, () ->
+                accountsService.depositMoney(account1.getAccountNumber(), account1.getPinNumber() + 1,  account1.getBalance()));
+        assertThrows(NoAccessException.class, () ->
+                accountsService.depositMoney(account1.getAccountNumber(), account1.getPinNumber() + 1,  account1.getBalance()));
+        assertThrows(NoAccessException.class, () ->
+                accountsService.depositMoney(account1.getAccountNumber(), account1.getPinNumber() + 1,  account1.getBalance()));
+        assertThrows(CustomException.class, () ->
+                accountsService.depositMoney(account1.getAccountNumber(), account1.getPinNumber(), account1.getBalance()));
+        accountsService.deleteAccount(accountNumber1);
+    }
+    @Test
+    void withdrawMoney() {
+        Account account1 = new Account(1, accountNumber1, 222, 300.00f);
+        accountsService.createAccount(account1);
+        String answer = accountsService.withdrawMoney(account1.getAccountNumber(), account1.getPinNumber(), account1.getBalance());
+        String expected = "Withdrawal has been completed.";
+        assertEquals(expected, answer);
+        assertThrows(CustomException.class, () ->
+                accountsService.withdrawMoney(account1.getAccountNumber(), account1.getPinNumber(), account1.getBalance()+200));
+        assertThrows(NoAccessException.class, () ->
+                accountsService.withdrawMoney(account1.getAccountNumber(), account1.getPinNumber() + 1,  account1.getBalance()));
+        assertThrows(NoAccessException.class, () ->
+                accountsService.withdrawMoney(account1.getAccountNumber(), account1.getPinNumber() + 1,  account1.getBalance()));
+        assertThrows(NoAccessException.class, () ->
+                accountsService.withdrawMoney(account1.getAccountNumber(), account1.getPinNumber() + 1,  account1.getBalance()));
+        assertThrows(CustomException.class, () ->
+                accountsService.withdrawMoney(account1.getAccountNumber(), account1.getPinNumber(), account1.getBalance()));
+        accountsService.deleteAccount(accountNumber1);
+    }
+
 }

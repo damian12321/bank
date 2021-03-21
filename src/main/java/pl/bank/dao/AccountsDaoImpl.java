@@ -87,7 +87,9 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     @Override
-    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount) {
+    public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount, String description) {
+        String descriptionOut = "Outgoing transfer to account " + destinationAccount + ".";
+        String descriptionIn = "Incoming transfer from account " + fromAccount + ".";
         if (fromAccount == destinationAccount || amount <= 0) {
             throw new CustomException("Incorrect values.");
         }
@@ -116,10 +118,19 @@ public class AccountsDaoImpl implements AccountsDao {
         }
         frAccount.setBalance(balance1 - amount);
         toAccount.setBalance(balance2 + amount);
+        Transaction transactionOut;
+        Transaction transactionIn;
         List<Transaction> list1 = frAccount.getTransactionList();
-        list1.add(new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), "Outgoing transfer to account " + destinationAccount + "."));
+        if (!description.isEmpty()) {
+            transactionOut = new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), description);
+            transactionIn = new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), description);
+        } else {
+            transactionOut = new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), descriptionOut);
+            transactionIn = new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), descriptionIn);
+        }
+        list1.add(transactionOut);
         List<Transaction> list2 = toAccount.getTransactionList();
-        list2.add(new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), "Incoming transfer from account " + fromAccount + "."));
+        list2.add(transactionIn);
         frAccount.setLoginAttempts(3);
         session.save(frAccount);
         session.save(toAccount);
@@ -138,6 +149,67 @@ public class AccountsDaoImpl implements AccountsDao {
             }
         }
         return ++highestNumber;
+    }
+
+    @Override
+    public String depositMoney(int accountNumber, int pinNumber, float amount) {
+        String description = "Deposit";
+        if (amount <= 0) {
+            throw new CustomException("Incorrect values.");
+        }
+        Session session = sessionFactory.getCurrentSession();
+        Query<Account> query = session.createQuery("from Account where accountNumber =" + accountNumber);
+        if (query.list().isEmpty()) {
+            throw new CustomException("Account with number: " + accountNumber + " not found.");
+        }
+        Account account = query.getResultList().get(0);
+
+        if (!account.getIsActive()) {
+            throw new CustomException("Account with number " + accountNumber + " is not active.");
+        }
+        if (account.getPinNumber() != pinNumber) {
+            throw new NoAccessException("Pin number is incorrect.");
+        }
+        float balance = account.getBalance();
+        account.setBalance(balance + amount);
+        List<Transaction> list1 = account.getTransactionList();
+        Transaction transaction = new Transaction(TransactionType.DEPOSIT, amount, new Date(), description);
+        list1.add(transaction);
+        account.setLoginAttempts(3);
+        session.save(account);
+        return "Deposit has been completed.";
+    }
+
+    @Override
+    public String withdrawMoney(int accountNumber, int pinNumber, float amount) {
+        String description = "Withdrawal";
+        if (amount <= 0) {
+            throw new CustomException("Incorrect values.");
+        }
+        Session session = sessionFactory.getCurrentSession();
+        Query<Account> query = session.createQuery("from Account where accountNumber =" + accountNumber);
+        if (query.list().isEmpty()) {
+            throw new CustomException("Account with number: " + accountNumber + " not found.");
+        }
+        Account account = query.getResultList().get(0);
+
+        if (!account.getIsActive()) {
+            throw new CustomException("Account with number " + accountNumber + " is not active.");
+        }
+        if (account.getPinNumber() != pinNumber) {
+            throw new NoAccessException("Pin number is incorrect.");
+        }
+        float balance = account.getBalance();
+        if (balance - amount < 0) {
+            throw new CustomException("Not enough money in the account.");
+        }
+        account.setBalance(balance - amount);
+        List<Transaction> list1 = account.getTransactionList();
+        Transaction transaction = new Transaction(TransactionType.WITHDRAWAL, amount, new Date(), description);
+        list1.add(transaction);
+        account.setLoginAttempts(3);
+        session.save(account);
+        return "Withdrawal has been completed.";
     }
 
 

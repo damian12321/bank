@@ -21,11 +21,19 @@ public class LoggingAspect {
     public void beforeGetAccount() {
 
     }
-    @Pointcut("execution(* pl.bank.service.AccountsService.transferMoney(int,int,int,float))")
+    @Pointcut("execution(* pl.bank.service.AccountsService.transferMoney(int,int,int,float,String))")
     public void beforeTransfer() {
 
     }
-    @Around("beforeGetAccount()||beforeTransfer()")
+    @Pointcut("execution(* pl.bank.service.AccountsService.withdrawMoney(int,int,float))")
+    public void beforeWithdraw() {
+
+    }
+    @Pointcut("execution(* pl.bank.service.AccountsService.depositMoney(int,int,float))")
+    public void beforeDeposit() {
+
+    }
+    @Around("beforeGetAccount()||beforeTransfer()||beforeWithdraw()||beforeDeposit()")
     public Object aroundGetFortune(ProceedingJoinPoint proceedingJoinPoint) throws Throwable
     {
 

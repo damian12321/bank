@@ -1,5 +1,6 @@
 package pl.bank.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import pl.bank.enums.TransactionType;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Transaction {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
+    @JsonFormat(pattern="dd-MM-yyyy hh:mm:ss")
     private Date date;
 
     @Column(name = "description")
