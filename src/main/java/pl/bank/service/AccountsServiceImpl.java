@@ -31,8 +31,8 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public String deleteAccount(int accountNumber) {
-        return accountsDao.deleteAccount(accountNumber);
+    public String deleteAccount(int accountId) {
+        return accountsDao.deleteAccount(accountId);
     }
 
     @Override

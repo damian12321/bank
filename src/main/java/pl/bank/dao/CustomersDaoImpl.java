@@ -45,7 +45,7 @@ public class CustomersDaoImpl implements CustomersDao {
             throw new CustomException("Customer with id: " + id+" not found.");
         }
         session.delete(customer);
-        return "Customer with id: "+id+" has been deleted";
+        return "Customer with id: "+id+" has been deleted.";
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CustomersDaoImpl implements CustomersDao {
     @Override
     public Customer updateCustomer(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(customer);
+        session.update(customer);
         return customer;
     }
 }

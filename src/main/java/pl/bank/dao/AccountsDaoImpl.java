@@ -41,15 +41,14 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     @Override
-    public String deleteAccount(int accountNumber) {
+    public String deleteAccount(int accountId) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Account> query = session.createQuery("from Account where accountNumber =" + accountNumber);
-        if (query.list().isEmpty()) {
-            throw new CustomException("Account with number: " + accountNumber + " not found.");
+        Account account=session.get(Account.class,accountId);
+        if (account==null) {
+            throw new CustomException("Account with number: " + accountId + " not found.");
         }
-        Account account = query.getResultList().get(0);
         session.delete(account);
-        return "Account with number: " + accountNumber + " has been deleted.";
+        return "Account with id: " + accountId + " has been deleted.";
     }
 
     @Override
@@ -82,7 +81,7 @@ public class AccountsDaoImpl implements AccountsDao {
     @Override
     public Account updateAccount(Account account) {
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(account);
+        session.update(account);
         return account;
     }
 
@@ -122,8 +121,10 @@ public class AccountsDaoImpl implements AccountsDao {
         Transaction transactionIn;
         List<Transaction> list1 = frAccount.getTransactionList();
         if (!description.isEmpty()) {
-            transactionOut = new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), description);
-            transactionIn = new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), description);
+            transactionOut = new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), description
+                    +". Send to account "+fromAccount);
+            transactionIn = new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), description
+                    +". Send from account "+destinationAccount);
         } else {
             transactionOut = new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), descriptionOut);
             transactionIn = new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), descriptionIn);
@@ -153,7 +154,7 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public String depositMoney(int accountNumber, int pinNumber, float amount) {
-        String description = "Deposit";
+        String description = "Deposit to account "+accountNumber;
         if (amount <= 0) {
             throw new CustomException("Incorrect values.");
         }
@@ -182,7 +183,7 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public String withdrawMoney(int accountNumber, int pinNumber, float amount) {
-        String description = "Withdrawal";
+        String description = "Withdrawal from account "+accountNumber;
         if (amount <= 0) {
             throw new CustomException("Incorrect values.");
         }

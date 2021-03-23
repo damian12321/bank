@@ -1,5 +1,7 @@
 package pl.bank.controllers;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,33 +28,32 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomersControllerTest {
     static CustomersService customersService;
     static AccountsService accountsService;
-    static int idNumber = 0;
     static List<Customer> list;
+    static int number;
     static Account account1;
-    static Account account2;
 
     @Autowired
     public void setCustomersService(CustomersService customersService,AccountsService accountsService) {
         CustomersControllerTest.customersService = customersService;
         CustomersControllerTest.accountsService=accountsService;
         list = customersService.getCustomers();
-        account1= new Account(1234, 222, 300.00f);
-        account2= new Account(1235, 222, 300.00f);
     }
-
     @Test
     @Order(1)
     void createCustomer() {
+        account1=new Account( 1, 222, 300.00f);
         Customer customer = new Customer(1, "Damian", "Juruś",account1,"1234");
         Customer answer = customersService.createCustomer(customer);
-        idNumber = answer.getId();
+        CustomersControllerTest.number=answer.getId();
+        CustomersControllerTest.account1=answer.getAccount();
+        customer.setId(answer.getId());
         assertEquals(customer, answer);
     }
 
     @Test
     @Order(2)
     void updateCustomer() {
-        Customer customer = new Customer(idNumber, "Damian", "Juruś",account2,"12345");
+        Customer customer = new Customer(number, "Damian", "Juruś",account1,"12345");
         Customer answer = customersService.updateCustomer(customer);
         assertEquals(customer, answer);
     }
@@ -61,17 +62,17 @@ class CustomersControllerTest {
     @Test
     @Order(3)
     void getCustomer() {
-        Customer customer = new Customer(1, "Damian", "Juruś",account2,"1234");
-        Customer answer = customersService.getCustomer(idNumber,"12345");
+        Customer customer = new Customer(number, "Damian", "Juruś",account1,"12345");
+        Customer answer = customersService.getCustomer(number,"12345");
         assertEquals(customer, answer);
-        assertThrows(NoAccessException.class,()->customersService.getCustomer(idNumber,"1234"));
+        assertThrows(NoAccessException.class,()->customersService.getCustomer(number,"1234"));
     }
 
     @Test
     @Order(4)
     void deleteCustomer() {
-        String answer = customersService.deleteCustomer(idNumber);
-        String expected = "Customer with id: " + idNumber + " has been deleted";
+        String answer = customersService.deleteCustomer(number);
+        String expected = "Customer with id: " + number + " has been deleted.";
         assertEquals(expected, answer);
     }
 
@@ -81,13 +82,11 @@ class CustomersControllerTest {
         List<Customer> answer = customersService.getCustomers();
         assertEquals(list, answer);
     }
-    @AfterAll //cleaning accounts
+    @AfterAll
     public static void reset()
     {
         List<Account> list = accountsService.getAccounts();
-        if(list.contains(account1))
-        accountsService.deleteAccount(account1.getAccountNumber());
-        if(list.contains(account2))
-        accountsService.deleteAccount(account2.getAccountNumber());
+        if (list.contains(account1))
+            accountsService.deleteAccount(account1.getId());
     }
 }

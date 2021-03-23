@@ -3,7 +3,7 @@ CREATE DATABASE spring_bank;
 USE spring_bank;
 CREATE TABLE `accounts` (
 `id` int NOT NULL AUTO_INCREMENT,
-`account_number` int unique not null,
+`account_number` int not null,
 `pin_number` int not null,
 `balance` FLOAT,
 `login_attempts` int default '3',

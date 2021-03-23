@@ -65,7 +65,7 @@ class TransactionsControllerTest {
     @Order(4)
     void deleteTransaction() {
         String answer = transactionsService.deleteTransaction(transactionNumber);
-        String expected = "Transaction with id: " + transactionNumber + " has been deleted";
+        String expected = "Transaction with id: " + transactionNumber + " has been deleted.";
         assertEquals(expected, answer);
         assertThrows(CustomException.class, () -> transactionsService.deleteTransaction(transactionNumber));
     }

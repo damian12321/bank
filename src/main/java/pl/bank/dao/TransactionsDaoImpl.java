@@ -44,7 +44,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
             throw new CustomException("Transaction with id: " + id + " not found.");
         }
         session.delete(transaction);
-        return "Transaction with id: " + id + " has been deleted";
+        return "Transaction with id: " + id + " has been deleted.";
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
     @Override
     public Transaction updateTransaction(Transaction transaction) {
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(transaction);
+        session.update(transaction);
         return transaction;
     }
 }

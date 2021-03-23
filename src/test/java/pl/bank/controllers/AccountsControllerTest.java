@@ -38,16 +38,28 @@ class AccountsControllerTest {
 
     @Test
     @Order(1)
-    void createAccount() {
-        Account account = new Account(1, accountNumber, 222, 300.00f);
-        Account answer = accountsService.createAccount(account);
-        idNumber = answer.getId();
-        assertEquals(account, answer);
-        assertThrows(RuntimeException.class, () -> accountsService.createAccount(account));
+    void getFreeAccountNumber() {
+        int highestNumber = 1;
+        for (Account account : list) {
+            if (account.getAccountNumber() > highestNumber) {
+                highestNumber = account.getAccountNumber();
+            }
+        }
+        int answer = accountsService.getFreeAccountNumber();
+        assertEquals(++highestNumber, answer);
     }
 
     @Test
     @Order(2)
+    void createAccount() {
+        Account account = new Account(1, 1, 222, 300.00f);
+        Account answer = accountsService.createAccount(account);
+        idNumber = answer.getId();
+        assertEquals(account, answer);
+    }
+
+    @Test
+    @Order(3)
     void updateAccount() {
         Account account = new Account(idNumber, accountNumber, 223, 300.00f);
         Account answer = accountsService.updateAccount(account);
@@ -56,7 +68,7 @@ class AccountsControllerTest {
 
 
     @Test
-    @Order(3)
+    @Order(4)
     void getAccount() {
         Account account = new Account(idNumber, accountNumber, 223, 300.00f);
         Account answer = accountsService.getAccount(accountNumber, 223);
@@ -68,39 +80,26 @@ class AccountsControllerTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void deleteAccount() {
-        String answer = accountsService.deleteAccount(accountNumber);
-        String expected = "Account with number: " + accountNumber + " has been deleted.";
+        String answer = accountsService.deleteAccount(idNumber);
+        String expected = "Account with id: " + idNumber + " has been deleted.";
         assertEquals(expected, answer);
-        assertThrows(CustomException.class, () -> accountsService.deleteAccount(accountNumber));
+        assertThrows(CustomException.class, () -> accountsService.deleteAccount(idNumber));
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void getAccounts() {
         List<Account> answer = accountsService.getAccounts();
         assertEquals(list, answer);
     }
-    @Test
-    @Order(6)
-    void getFreeAccountNumber() {
-        int number= accountsService.getFreeAccountNumber();
-        int highestNumber = 1;
-        for (Account account : list) {
-            if (account.getAccountNumber() > highestNumber) {
-                highestNumber = account.getAccountNumber();
-            }
-        }
-        int answer=accountsService.getFreeAccountNumber();
-        assertEquals(++highestNumber, answer);
-    }
+
     @AfterAll //cleaning accounts
-    public static void reset()
-    {
+    public static void reset() {
         List<Account> list = accountsService.getAccounts();
         Account account = new Account(idNumber, accountNumber, 223, 300.00f);
-        if(list.contains(account))
+        if (list.contains(account))
             accountsService.deleteAccount(account.getAccountNumber());
 
     }
