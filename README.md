@@ -6,7 +6,7 @@
 * [Setup](#setup)
 * [Endpoint list](#endpoint-list)
 * [List of objects](#list-of-objects)
-* [Screenshot](#screenshot)
+* [Screenshots](#screenshots)
 
 ## General info
 This project is a RESTful bank application.
@@ -126,5 +126,9 @@ Transaction
 "description": "String"
 }
 ```
-## Screenshot
+## Screenshots
+Example result of GET /api/account 
 ![Screen1](./img/Screen1.png)
+
+Entity Relationship Diagram
+![Screen2](./img/Screen2.png)
