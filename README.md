@@ -1,7 +1,7 @@
 ## Table of contents
 * [General info](#general-info)
 * [Project assumptions](#project-assumptions)
-* [Program's idea](#program's-idea)
+* [Application idea](#application-idea)
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Endpoint list](#endpoint-list)
@@ -18,7 +18,7 @@ This project is a RESTful bank application.
 * Use Hibernate
 * Use JUnit 5
 
-## Program's idea
+## Application idea
 * Every customer can create the account 
 * Every customer can get all information about their own account
 * Every customer can perform banking operations such as deposit money, withdraw money, check balance, transfer between accounts.
