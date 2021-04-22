@@ -58,7 +58,7 @@ https://github.com/damian12321/bank-client
 
 ```
 GET    /api/account                                                              - get all accounts, only for administrator
-PUT	   /api/account                                                              - update account
+PUT    /api/account                                                              - update account
           param: Account object
 POST   /api/account                                                              - add new account
           param: Account object
