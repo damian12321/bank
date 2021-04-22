@@ -13,6 +13,7 @@ public class GlobalExceptionHandler {
         ResponseEntity<CustomExceptionHandler> responseEntity = new ResponseEntity<>(customExceptionHandler, HttpStatus.NOT_FOUND);
         return responseEntity;
     }
+
     @ExceptionHandler(NoAccessException.class)
     private ResponseEntity<CustomExceptionHandler> handleException(NoAccessException e) {
         CustomExceptionHandler customExceptionHandler = new CustomExceptionHandler(HttpStatus.UNAUTHORIZED.value(), e.getMessage());

@@ -40,20 +40,20 @@ public class CustomersDaoImpl implements CustomersDao {
     @Override
     public String deleteCustomer(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Customer customer=session.get(Customer.class,id);
+        Customer customer = session.get(Customer.class, id);
         if (customer == null) {
-            throw new CustomException("Customer with id: " + id+" not found.");
+            throw new CustomException("Customer with id: " + id + " not found.");
         }
         session.delete(customer);
-        return "Customer with id: "+id+" has been deleted.";
+        return "Customer with id: " + id + " has been deleted.";
     }
 
     @Override
     public Customer getCustomer(int id, String customerPassword) {
         Session session = sessionFactory.getCurrentSession();
-        Customer customer=session.get(Customer.class,id);
+        Customer customer = session.get(Customer.class, id);
         if (customer == null) {
-            throw new CustomException("Customer with id: " + id+" not found.");
+            throw new CustomException("Customer with id: " + id + " not found.");
         }
         if (!customer.getPassword().equals(customerPassword)) {
             throw new NoAccessException("Password is not correct.");

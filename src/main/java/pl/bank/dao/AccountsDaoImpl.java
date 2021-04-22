@@ -43,8 +43,8 @@ public class AccountsDaoImpl implements AccountsDao {
     @Override
     public String deleteAccount(int accountId) {
         Session session = sessionFactory.getCurrentSession();
-        Account account=session.get(Account.class,accountId);
-        if (account==null) {
+        Account account = session.get(Account.class, accountId);
+        if (account == null) {
             throw new CustomException("Account with number: " + accountId + " not found.");
         }
         session.delete(account);
@@ -122,9 +122,9 @@ public class AccountsDaoImpl implements AccountsDao {
         List<Transaction> list1 = frAccount.getTransactionList();
         if (!description.isEmpty()) {
             transactionOut = new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), description
-                    +". Send to account "+fromAccount);
+                    + ". Send to account " + fromAccount);
             transactionIn = new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), description
-                    +". Send from account "+destinationAccount);
+                    + ". Send from account " + destinationAccount);
         } else {
             transactionOut = new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), descriptionOut);
             transactionIn = new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), descriptionIn);
@@ -154,7 +154,7 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public String depositMoney(int accountNumber, int pinNumber, float amount) {
-        String description = "Deposit to account "+accountNumber;
+        String description = "Deposit to account " + accountNumber;
         if (amount <= 0) {
             throw new CustomException("Incorrect values.");
         }
@@ -183,7 +183,7 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public String withdrawMoney(int accountNumber, int pinNumber, float amount) {
-        String description = "Withdrawal from account "+accountNumber;
+        String description = "Withdrawal from account " + accountNumber;
         if (amount <= 0) {
             throw new CustomException("Incorrect values.");
         }

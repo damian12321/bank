@@ -33,19 +33,20 @@ class CustomersControllerTest {
     static Account account1;
 
     @Autowired
-    public void setCustomersService(CustomersService customersService,AccountsService accountsService) {
+    public void setCustomersService(CustomersService customersService, AccountsService accountsService) {
         CustomersControllerTest.customersService = customersService;
-        CustomersControllerTest.accountsService=accountsService;
+        CustomersControllerTest.accountsService = accountsService;
         list = customersService.getCustomers();
     }
+
     @Test
     @Order(1)
     void createCustomer() {
-        account1=new Account( 1, 222, 300.00f);
-        Customer customer = new Customer(1, "Damian", "Juruś",account1,"1234");
+        account1 = new Account(1, 222, 300.00f);
+        Customer customer = new Customer(1, "Damian", "Juruś", account1, "1234");
         Customer answer = customersService.createCustomer(customer);
-        CustomersControllerTest.number=answer.getId();
-        CustomersControllerTest.account1=answer.getAccount();
+        CustomersControllerTest.number = answer.getId();
+        CustomersControllerTest.account1 = answer.getAccount();
         customer.setId(answer.getId());
         assertEquals(customer, answer);
     }
@@ -53,7 +54,7 @@ class CustomersControllerTest {
     @Test
     @Order(2)
     void updateCustomer() {
-        Customer customer = new Customer(number, "Damian", "Juruś",account1,"12345");
+        Customer customer = new Customer(number, "Damian", "Juruś", account1, "12345");
         Customer answer = customersService.updateCustomer(customer);
         assertEquals(customer, answer);
     }
@@ -62,10 +63,10 @@ class CustomersControllerTest {
     @Test
     @Order(3)
     void getCustomer() {
-        Customer customer = new Customer(number, "Damian", "Juruś",account1,"12345");
-        Customer answer = customersService.getCustomer(number,"12345");
+        Customer customer = new Customer(number, "Damian", "Juruś", account1, "12345");
+        Customer answer = customersService.getCustomer(number, "12345");
         assertEquals(customer, answer);
-        assertThrows(NoAccessException.class,()->customersService.getCustomer(number,"1234"));
+        assertThrows(NoAccessException.class, () -> customersService.getCustomer(number, "1234"));
     }
 
     @Test
@@ -82,9 +83,9 @@ class CustomersControllerTest {
         List<Customer> answer = customersService.getCustomers();
         assertEquals(list, answer);
     }
+
     @AfterAll
-    public static void reset()
-    {
+    public static void reset() {
         List<Account> list = accountsService.getAccounts();
         if (list.contains(account1))
             accountsService.deleteAccount(account1.getId());

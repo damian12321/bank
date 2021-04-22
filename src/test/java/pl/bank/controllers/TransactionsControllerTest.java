@@ -76,12 +76,12 @@ class TransactionsControllerTest {
         List<Transaction> answer = transactionsService.getTransactions();
         assertEquals(list, answer);
     }
+
     @AfterAll //cleaning transaction
-    public static void reset()
-    {
+    public static void reset() {
         List<Transaction> list = transactionsService.getTransactions();
         Transaction transaction = new Transaction(transactionNumber, TransactionType.WITHDRAWAL, 100, new Date(), "Description");
-        if(list.contains(transaction))
+        if (list.contains(transaction))
             transactionsService.deleteTransaction(transactionNumber);
     }
 }

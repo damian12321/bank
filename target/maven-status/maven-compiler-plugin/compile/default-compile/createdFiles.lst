@@ -6,7 +6,6 @@ pl\bank\entity\Transaction.class
 pl\bank\dao\CustomersDaoImpl.class
 pl\bank\controllers\AccountsController.class
 pl\bank\service\TransactionsServiceImpl.class
-pl\bank\Test\JDBCTest.class
 pl\bank\service\AccountsServiceImpl.class
 pl\bank\configuration\DemoSecurityConfig.class
 pl\bank\configuration\SecurityWebApplicationInitializer.class

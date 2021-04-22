@@ -23,11 +23,13 @@ public class TransferController {
                                 @PathVariable float amount, @RequestBody TextNode description) {
         return accountsService.transferMoney(fromAccountNumber, pinNumber, toAccountNumber, amount, description.asText());
     }
+
     @PostMapping("/deposit/{accountNumber}/{pinNumber}/{amount}")
     public String depositMoney(@PathVariable int accountNumber, @PathVariable int pinNumber,
-                                @PathVariable float amount) {
+                               @PathVariable float amount) {
         return accountsService.depositMoney(accountNumber, pinNumber, amount);
     }
+
     @PostMapping("/withdraw/{accountNumber}/{pinNumber}/{amount}")
     public String withdrawMoney(@PathVariable int accountNumber, @PathVariable int pinNumber, @PathVariable float amount) {
         return accountsService.withdrawMoney(accountNumber, pinNumber, amount);
