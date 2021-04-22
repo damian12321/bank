@@ -31,6 +31,7 @@ Project is created with:
 * Spring
 * Hibernate
 * JUnit 5
+* Maven 3
 * MySQL
 
 ## Setup
