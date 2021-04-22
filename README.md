@@ -127,8 +127,8 @@ Transaction
 }
 ```
 ## Screenshots
-Example result of GET /api/account 
+#### Example result of GET /api/account 
 ![Screen1](./img/Screen1.png)
 
-Entity Relationship Diagram
+#### Entity Relationship Diagram
 ![Screen2](./img/Screen2.png)
