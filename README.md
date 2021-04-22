@@ -4,7 +4,7 @@
 * [Application idea](#application-idea)
 * [Technologies](#technologies)
 * [Setup](#setup)
-* [Endpoint list](#endpoint-list)
+* [List of endpoints](#list-of-endpoints)
 * [List of objects](#list-of-objects)
 * [Screenshots](#screenshots)
 
@@ -55,7 +55,7 @@ https://www.postman.com/
 or use my own bank client application
 https://github.com/damian12321/bank-client
 
-## Endpoint list
+## List of endpoints
 
 ```
 GET    /api/account                                                              - get all accounts, only for administrator
