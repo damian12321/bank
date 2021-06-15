@@ -13,9 +13,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class CustomersController {
 
-
     private CustomersService customersService;
-
 
     @Autowired
     public CustomersController(CustomersService customersService) {

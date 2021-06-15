@@ -1,7 +1,6 @@
 package pl.springbank.bank.dao;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,7 +23,7 @@ public class AccountsDaoImpl implements AccountsDao {
     @Autowired
     public AccountsDaoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
-        session = entityManager.unwrap(Session.class);
+        this.session = entityManager.unwrap(Session.class);
     }
 
     @Override
@@ -32,14 +31,6 @@ public class AccountsDaoImpl implements AccountsDao {
         Query<Account> query = session.createQuery("from Account", Account.class);
         List<Account> list = query.getResultList();
         return list;
-    }
-
-    @Override
-    public Account createAccount(Account account) {
-
-        account.setId(0);
-        session.save(account);
-        return account;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class CustomersDaoImpl implements CustomersDao {
     @Autowired
     public CustomersDaoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
-        session = entityManager.unwrap(Session.class);
+        this.session = entityManager.unwrap(Session.class);
     }
 
     @Override

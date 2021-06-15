@@ -7,8 +7,6 @@ import java.util.List;
 public interface AccountsDao {
     public List<Account> getAccounts();
 
-    public Account createAccount(Account account);
-
     public String deleteAccount(int accountId);
 
     public Account getAccount(int accountNumber, int pinNumber);

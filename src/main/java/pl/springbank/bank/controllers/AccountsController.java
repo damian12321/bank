@@ -14,9 +14,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class AccountsController {
 
-
     private AccountsService accountsService;
-
 
     @Autowired
     public AccountsController(AccountsService accountsService) {

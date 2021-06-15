@@ -19,7 +19,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
     @Autowired
     public TransactionsDaoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
-        session = entityManager.unwrap(Session.class);
+        this.session = entityManager.unwrap(Session.class);
     }
 
     @Override
@@ -28,14 +28,6 @@ public class TransactionsDaoImpl implements TransactionsDao {
         Query<Transaction> query = session.createQuery("from Transaction ORDER BY date DESC", Transaction.class);
         List<Transaction> list = query.getResultList();
         return list;
-    }
-
-    @Override
-    public Transaction createTransaction(Transaction transaction) {
-
-        transaction.setId(0);
-        session.save(transaction);
-        return transaction;
     }
 
     @Override
