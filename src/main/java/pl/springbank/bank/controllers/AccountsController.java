@@ -42,11 +42,6 @@ public class AccountsController {
         return accountsService.updateAccount(account);
     }
 
-    @PostMapping("/accounts")
-    public Account createAccount(@RequestBody Account account) {
-        return accountsService.createAccount(account);
-    }
-
     @GetMapping("/accounts/number")
     public int getFreeAccountNumber() {
         return accountsService.getFreeAccountNumber();

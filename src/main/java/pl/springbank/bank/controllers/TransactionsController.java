@@ -41,9 +41,4 @@ public class TransactionsController {
         return transactionsService.updateTransaction(transaction);
     }
 
-    @PostMapping("/transactions")
-    public Transaction createTransaction(@RequestBody Transaction transaction) {
-        return transactionsService.createTransaction(transaction);
-    }
-
 }

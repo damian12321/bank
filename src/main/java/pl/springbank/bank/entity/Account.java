@@ -1,33 +1,26 @@
 package pl.springbank.bank.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "accounts")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "account_number")
     private int accountNumber;
 
-    @Column(name = "pin_number")
-    @JsonIgnore
     private int pinNumber;
 
-    @Column(name = "balance")
     private float balance;
 
-    @Column(name = "login_attempts")
     private int loginAttempts;
 
-    @Column(name = "active")
     private boolean isActive;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -69,11 +62,11 @@ public class Account {
     public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
     }
-
+    @JsonIgnore
     public int getPinNumber() {
         return pinNumber;
     }
-
+    @JsonProperty
     public void setPinNumber(int pinNumber) {
         this.pinNumber = pinNumber;
     }

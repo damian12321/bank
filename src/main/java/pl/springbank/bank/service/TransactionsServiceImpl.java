@@ -26,12 +26,6 @@ public class TransactionsServiceImpl implements TransactionsService {
 
     @Override
     @Transactional
-    public Transaction createTransaction(Transaction transaction) {
-        return transactionsDao.createTransaction(transaction);
-    }
-
-    @Override
-    @Transactional
     public String deleteTransaction(int id) {
         return transactionsDao.deleteTransaction(id);
     }

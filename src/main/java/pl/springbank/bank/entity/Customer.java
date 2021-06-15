@@ -1,30 +1,25 @@
 package pl.springbank.bank.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "customers")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name")
     private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @Column(name = "password")
-    @JsonIgnore
     private String password;
 
     public Customer() {
@@ -74,11 +69,11 @@ public class Customer {
     public void setAccount(Account account) {
         this.account = account;
     }
-
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
-
+@JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

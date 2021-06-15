@@ -57,42 +57,7 @@ https://github.com/damian12321/bank-client
 
 ## List of endpoints
 
-```
-GET    /api/account                                                              - get all accounts, only for administrator
-PUT    /api/account                                                              - update account
-          param: Account object
-POST   /api/account                                                              - add new account
-          param: Account object
-GET    /api/account/number                                                       - get free account number
-DELETE /api/account/{accountId}                                                  - delete specific account
-          param: int accountId
-GET    /api/account/{accountId}/{pinNumber}                                      - get information about specific account
-          param: int accountId, int pinNumber
-GET    /api/customer                                                             - get all customers, only for administrator
-PUT    /api/customer                                                             - update customer
-          param: Customer object
-POST   /api/customer                                                             - add new customer
-          param: Customer object
-DELETE /api/customer/{customerId}                                                - delete specific customer
-          param: int customerId
-GET    /api/customer/{customerId}/{customerPassword}                             - get information about specific customer
-          param: int customerId, String customerPassword
-POST   /api/deposit/{accountNumber}/{pinNumber}/{amount}                         - deposit money
-          param: int accountNumber, int pinNumber, float amount
-GET    /api/transaction                                                          - get all transactions, only for administrator
-PUT    /api/transaction                                                          - update transaction
-          param: Transaction object
-POST   /api/transaction                                                          - add new transaction
-          param: Transaction object
-GET    /api/transaction/{transactionId}                                          - get specific transaction
-          param: int transactionId
-DELETE /api/transaction/{transactionId}                                          - delete specific transaction
-          param: int transactionId
-POST   /api/withdraw/{accountNumber}/{pinNumber}/{amount}                        - withdraw money
-          param: int accountNumber, int pinNumber, float amount
-POST   /api/transfer/{fromAccountNumber}/{pinNumber}/{toAccountNumber}/{amount}/ - transfer money to other account 
-          param: int fromAccountNumber, int pinNumber, int toAccountNumber, float amount, String object as a description
-```
+IN PROGRESS
 
 ## List of objects
 List of objects saved as JSON 

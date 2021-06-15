@@ -9,25 +9,19 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "transactions")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
-
-    @Column(name = "transaction_type")
+    @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
-    @Column(name = "amount")
     private float amount;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date")
     @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
     private Date date;
 
-    @Column(name = "description")
     private String description;
 
     public Transaction() {

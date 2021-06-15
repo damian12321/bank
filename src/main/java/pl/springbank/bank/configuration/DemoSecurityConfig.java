@@ -25,18 +25,18 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/customer").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/account").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/transaction").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/customer/").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/account/").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/transaction/").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/customer/**").hasAnyRole("ADMIN,CUSTOMER")
-                .antMatchers(HttpMethod.GET, "/api/account/**").hasAnyRole("ADMIN,CUSTOMER")
-                .antMatchers(HttpMethod.GET, "/api/transaction/**").hasAnyRole("ADMIN,CUSTOMER")
+                .antMatchers(HttpMethod.GET, "/api/customers").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/accounts").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/transactions").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/customers/").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/accounts/").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/transactions/").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/customers/**").hasAnyRole("ADMIN,CUSTOMER")
+                .antMatchers(HttpMethod.GET, "/api/accounts/**").hasAnyRole("ADMIN,CUSTOMER")
+                .antMatchers(HttpMethod.GET, "/api/transactions/**").hasAnyRole("ADMIN,CUSTOMER")
                 .antMatchers(HttpMethod.GET, "/api/transfer/**").hasAnyRole("ADMIN,CUSTOMER")
                 .antMatchers(HttpMethod.POST, "/api/**").hasAnyRole("ADMIN,CUSTOMER")
                 .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN")

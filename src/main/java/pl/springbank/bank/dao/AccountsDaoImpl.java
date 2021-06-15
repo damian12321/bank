@@ -115,9 +115,9 @@ public class AccountsDaoImpl implements AccountsDao {
         List<Transaction> list1 = frAccount.getTransactionList();
         if (!description.isEmpty()) {
             transactionOut = new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), description
-                    + ". Send to account " + fromAccount);
+                    + ". Send to account " + destinationAccount);
             transactionIn = new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), description
-                    + ". Send from account " + destinationAccount);
+                    + ". Send from account " + fromAccount);
         } else {
             transactionOut = new Transaction(TransactionType.OUTGOING_TRANSFER, amount, new Date(), descriptionOut);
             transactionIn = new Transaction(TransactionType.INCOMING_TRANSFER, amount, new Date(), descriptionIn);

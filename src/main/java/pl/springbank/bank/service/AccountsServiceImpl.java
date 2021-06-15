@@ -25,11 +25,6 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public Account createAccount(Account account) {
-        return accountsDao.createAccount(account);
-    }
-
-    @Override
     public String deleteAccount(int accountId) {
         return accountsDao.deleteAccount(accountId);
     }
