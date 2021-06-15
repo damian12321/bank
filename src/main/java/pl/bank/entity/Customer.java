@@ -1,5 +1,7 @@
 package pl.bank.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -22,6 +24,7 @@ public class Customer {
     private Account account;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     public Customer() {
