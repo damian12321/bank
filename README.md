@@ -1,10 +1,10 @@
 ## Table of contents
 * [General info](#general-info)
 * [Project assumptions](#project-assumptions)
-* [Program's idea](#program's-idea)
+* [Application idea](#application-idea)
 * [Technologies](#technologies)
 * [Setup](#setup)
-* [Endpoint list](#endpoint-list)
+* [List of endpoints](#list-of-endpoints)
 * [List of objects](#list-of-objects)
 * [Screenshots](#screenshots)
 
@@ -18,7 +18,7 @@ This project is a RESTful bank application.
 * Use Hibernate
 * Use JUnit 5
 
-## Program's idea
+## Application idea
 * Every customer can create the account 
 * Every customer can get all information about their own account
 * Every customer can perform banking operations such as deposit money, withdraw money, check balance, transfer between accounts.
@@ -31,6 +31,7 @@ Project is created with:
 * Spring
 * Hibernate
 * JUnit 5
+* Maven 3
 * MySQL
 
 ## Setup
@@ -54,7 +55,7 @@ https://www.postman.com/
 or use my own bank client application
 https://github.com/damian12321/bank-client
 
-## Endpoint list
+## List of endpoints
 
 ```
 GET    /api/account                                                              - get all accounts, only for administrator
@@ -77,7 +78,7 @@ DELETE /api/customer/{customerId}                                               
 GET    /api/customer/{customerId}/{customerPassword}                             - get information about specific customer
           param: int customerId, String customerPassword
 POST   /api/deposit/{accountNumber}/{pinNumber}/{amount}                         - deposit money
-          param: int accountNumber, int pinNumber, double amount
+          param: int accountNumber, int pinNumber, float amount
 GET    /api/transaction                                                          - get all transactions, only for administrator
 PUT    /api/transaction                                                          - update transaction
           param: Transaction object
@@ -88,9 +89,9 @@ GET    /api/transaction/{transactionId}                                         
 DELETE /api/transaction/{transactionId}                                          - delete specific transaction
           param: int transactionId
 POST   /api/withdraw/{accountNumber}/{pinNumber}/{amount}                        - withdraw money
-          param: int accountNumber, int pinNumber, double amount
+          param: int accountNumber, int pinNumber, float amount
 POST   /api/transfer/{fromAccountNumber}/{pinNumber}/{toAccountNumber}/{amount}/ - transfer money to other account 
-          param: int fromAccountNumber, int pinNumber, int toAccountNumber, double amount, String object as a description
+          param: int fromAccountNumber, int pinNumber, int toAccountNumber, float amount, String object as a description
 ```
 
 ## List of objects
@@ -111,7 +112,7 @@ Account
 "id": int,
 "accountNumber": int,
 "pinNumber": int,
-"balance": double,
+"balance": float,
 "loginAttempts": int,
 "isActive": boolean,
 "transactionList": [Transaction objects]
@@ -121,14 +122,14 @@ Transaction
 {
 "id": int,
 "transactionType": "String",
-"amount": double,
+"amount": float,
 "date": "Date object",
 "description": "String"
 }
 ```
 ## Screenshots
-Example result of GET /api/account 
+#### Example result of GET /api/account 
 ![Screen1](./img/Screen1.png)
 
-Entity Relationship Diagram
+#### Entity Relationship Diagram
 ![Screen2](./img/Screen2.png)
