@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.springbank.bank.entity.Customer;
 import pl.springbank.bank.service.CustomersService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,12 +37,12 @@ public class CustomersController {
     }
 
     @PutMapping("/customers")
-    public Customer updateCustomer(@RequestBody Customer customer) {
+    public Customer updateCustomer(@Valid @RequestBody Customer customer) {
         return customersService.updateCustomer(customer);
     }
 
     @PostMapping("/customers")
-    public Customer createCustomer(@RequestBody Customer customer) {
+    public Customer createCustomer(@Valid @RequestBody Customer customer) {
         return customersService.createCustomer(customer);
     }
 

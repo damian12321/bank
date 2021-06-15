@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -11,15 +12,15 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @Size(min=2, message="Name should have at least 2 characters")
     private String firstName;
-
+    @Size(min=2, message="Last name should have at least 2 characters")
     private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Account account;
-
+    @Size(min=4, message="Password should have at least 4 characters")
     private String password;
 
     public Customer() {

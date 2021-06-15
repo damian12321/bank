@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +17,7 @@ public class Account {
 
     private int accountNumber;
 
+    @Min(value = 1000,message = "Pin number should have at least 4 characters")
     private int pinNumber;
 
     private float balance;
