@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.springbank.bank.dao.AccountsDao;
 import pl.springbank.bank.entity.Account;
+import pl.springbank.bank.entity.Transaction;
 import pl.springbank.bank.exception.NoAccessException;
 
 import javax.transaction.Transactional;
@@ -31,18 +32,28 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public Account getAccount(int accountNumber, int pinNumber) {
-        return accountsDao.getAccount(accountNumber, pinNumber);
+    public Account getAccount(int accountId, String password) {
+        return accountsDao.getAccount(accountId, password);
     }
 
     @Override
-    public Account getAccountByOnlyAccountNumber(int accountNumber) {
-        return accountsDao.getAccountByOnlyAccountNumber(accountNumber);
+    public Account getAccountByAccountNumber(int accountNumber) {
+        return accountsDao.getAccountByAccountNumber(accountNumber);
     }
 
     @Override
-    public Account updateAccount(Account account) {
-        return accountsDao.updateAccount(account);
+    public Account getAccountByAccountId(int accountId) {
+        return accountsDao.getAccountByAccountId(accountId);
+    }
+
+    @Override
+    public Account createAccount(Account account) {
+        return accountsDao.createAccount(account);
+    }
+
+    @Override
+    public Account saveOrUpdateAccount(Account account) {
+        return accountsDao.saveOrUpdateAccount(account);
     }
 
     @Override
@@ -63,5 +74,10 @@ public class AccountsServiceImpl implements AccountsService {
     @Override
     public String withdrawMoney(int accountNumber, int pinNumber, float amount) {
         return accountsDao.withdrawMoney(accountNumber, pinNumber, amount);
+    }
+
+    @Override
+    public List<Transaction> getAccountsTransactions(int accountId, String password) {
+        return accountsDao.getAccountsTransactions(accountId, password);
     }
 }

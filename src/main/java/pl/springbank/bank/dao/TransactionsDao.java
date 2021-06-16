@@ -1,10 +1,10 @@
 package pl.springbank.bank.dao;
 
 import pl.springbank.bank.entity.Transaction;
-
 import java.util.List;
 
 public interface TransactionsDao {
+
     public List<Transaction> getTransactions();
 
     public String deleteTransaction(int id);

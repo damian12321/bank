@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 import pl.springbank.bank.entity.Account;
+import pl.springbank.bank.entity.Transaction;
 import pl.springbank.bank.service.AccountsService;
-
-
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,9 +29,9 @@ public class AccountsController {
         return accountsService.getAccounts();
     }
 
-    @GetMapping("/accounts/{accountId}/{pinNumber}")
-    public Account getAccount(@PathVariable int accountId, @PathVariable int pinNumber) {
-        return accountsService.getAccount(accountId, pinNumber);
+    @GetMapping("/accounts/{accountId}/{password}")
+    public Account getAccount(@PathVariable int accountId, @PathVariable String password) {
+        return accountsService.getAccount(accountId, password);
     }
 
     @DeleteMapping("/accounts/{accountId}")
@@ -40,17 +40,28 @@ public class AccountsController {
     }
 
     @PutMapping("/accounts")
-    public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
-        int accountId=account.getId();
-        Account tempAccount=accountsService.updateAccount(account);
-        if(tempAccount.getId()==accountId)
+    public ResponseEntity<Account> saveOrUpdateAccount(@Valid @RequestBody Account account) {
+        int accountId = account.getId();
+        Account tempAccount = accountsService.saveOrUpdateAccount(account);
+        if (tempAccount.getId() == accountId)
             return new ResponseEntity<>(tempAccount, HttpStatus.OK);
         return new ResponseEntity<>(tempAccount, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/accounts")
+    public ResponseEntity<Account> createAccount(@Valid @RequestBody Account account) {
+        account = accountsService.createAccount(account);
+        return new ResponseEntity<>(account, HttpStatus.CREATED);
     }
 
     @GetMapping("/accounts/number")
     public int getAvailableAccountNumber() {
         return accountsService.getAvailableAccountNumber();
+    }
+
+    @GetMapping("/accounts/{accountId}/{password}/transactions")
+    public List<Transaction> getAccountsTransactions(@PathVariable int accountId, @PathVariable String password) {
+        return accountsService.getAccountsTransactions(accountId, password);
     }
 
 

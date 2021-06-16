@@ -16,13 +16,13 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Size(min=2, message="Name should have at least 2 characters")
+    @Size(min = 2, message = "Name should have at least 2 characters")
     private String firstName;
 
-    @Size(min=2, message="Last name should have at least 2 characters")
+    @Size(min = 2, message = "Last name should have at least 2 characters")
     private String lastName;
 
-    @Size(min=4, message="Password should have at least 4 characters")
+    @Size(min = 4, message = "Password should have at least 4 characters")
     private String password;
 
     @Column(unique = true)
@@ -70,13 +70,33 @@ public class Account {
         this.pinNumber = pinNumber;
     }
 
-    public boolean getIsActive()
-    {
-    return isActive;
+    @JsonIgnore
+    public String getPassword() {
+        return password;
     }
-    public void setIsActive(boolean isActive)
-    {
-        this.isActive=isActive;
+
+    @JsonProperty
+    public void setPassword(String password) {
+        this.password = password;
     }
+
+    @JsonIgnore
+    public List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+    @JsonProperty
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
 
 }

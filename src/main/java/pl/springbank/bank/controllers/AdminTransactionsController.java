@@ -5,19 +5,17 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 import pl.springbank.bank.entity.Transaction;
 import pl.springbank.bank.service.TransactionsService;
-
 import java.util.List;
 
 @RestController
 @EnableTransactionManagement
 @RequestMapping("/api")
-public class TransactionsController {
-
+public class AdminTransactionsController {
 
     private TransactionsService transactionsService;
 
     @Autowired
-    public TransactionsController(TransactionsService transactionsService) {
+    public AdminTransactionsController(TransactionsService transactionsService) {
         this.transactionsService = transactionsService;
     }
 

@@ -14,10 +14,15 @@ import pl.springbank.bank.service.AccountsService;
 @Aspect
 @Component
 public class LoggingAspect {
-    @Autowired
-    AccountsService accountsService;
 
-    @Pointcut("execution(* pl.springbank.bank.service.AccountsService.getAccount(int,int))")
+    private AccountsService accountsService;
+
+    @Autowired
+    public LoggingAspect(AccountsService accountsService) {
+        this.accountsService = accountsService;
+    }
+
+    @Pointcut("execution(* pl.springbank.bank.service.AccountsService.getAccount(int,String))")
     public void beforeGetAccount() {
 
     }
@@ -37,28 +42,53 @@ public class LoggingAspect {
 
     }
 
-    @Around("beforeGetAccount()||beforeTransfer()||beforeWithdraw()||beforeDeposit()")
-    public Object aroundGetFortune(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    @Pointcut("execution(* pl.springbank.bank.service.AccountsService.getAccountsTransactions(int,String))")
+    public void beforeGetAccountsTransactions() {
+
+    }
+
+    @Around("beforeTransfer()||beforeWithdraw()||beforeDeposit()")
+    public Object pinNotCorrect(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         Object result;
         try {
             result = proceedingJoinPoint.proceed();
         } catch (NoAccessException e) {
-
             Object[] objects = proceedingJoinPoint.getArgs();
             int accountNumber = (int) objects[0];
-            Account account = accountsService.getAccountByOnlyAccountNumber(accountNumber);
+            Account account = accountsService.getAccountByAccountNumber(accountNumber);
             int loginAttempts = account.getLoginAttempts();
             if (loginAttempts > 0) {
                 account.setLoginAttempts(--loginAttempts);
                 if (loginAttempts == 0) {
                     account.setIsActive(false);
                 }
-                accountsService.updateAccount(account);
+                accountsService.saveOrUpdateAccount(account);
             }
             throw new NoAccessException(e.getMessage());
         }
+        return result;
+    }
+    @Around("beforeGetAccount()||beforeGetAccountsTransactions()")
+    public Object passwordNotCorrect(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
+        Object result;
+        try {
+            result = proceedingJoinPoint.proceed();
+        } catch (NoAccessException e) {
+            Object[] objects = proceedingJoinPoint.getArgs();
+            int accountId = (int) objects[0];
+            Account account = accountsService.getAccountByAccountId(accountId);
+            int loginAttempts = account.getLoginAttempts();
+            if (loginAttempts > 0) {
+                account.setLoginAttempts(--loginAttempts);
+                if (loginAttempts == 0) {
+                    account.setIsActive(false);
+                }
+                accountsService.saveOrUpdateAccount(account);
+            }
+            throw new NoAccessException(e.getMessage());
+        }
         return result;
     }
 

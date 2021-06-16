@@ -8,7 +8,7 @@ public class CustomExceptionHandler {
     private String message;
 
     public CustomExceptionHandler(Date timestamp, int status, String message) {
-        this.timestamp=timestamp;
+        this.timestamp = timestamp;
         this.status = status;
         this.message = message;
     }
