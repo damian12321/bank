@@ -8,7 +8,9 @@ import pl.springbank.bank.entity.Account;
 import pl.springbank.bank.entity.Transaction;
 import pl.springbank.bank.enums.TransactionType;
 import pl.springbank.bank.exception.CustomException;
+import pl.springbank.bank.exception.LockedException;
 import pl.springbank.bank.exception.NoAccessException;
+import pl.springbank.bank.exception.NoResourcesException;
 
 import javax.persistence.EntityManager;
 import java.util.Date;
@@ -38,7 +40,7 @@ public class AccountsDaoImpl implements AccountsDao {
 
         Account account = session.get(Account.class, accountId);
         if (account == null) {
-            throw new CustomException("Account with number: " + accountId + " not found.");
+            throw new NoResourcesException("Account with number: " + accountId + " not found.");
         }
         session.delete(account);
         return "Account with id: " + accountId + " has been deleted.";
@@ -49,11 +51,11 @@ public class AccountsDaoImpl implements AccountsDao {
 
         Query<Account> query = session.createQuery("from Account where accountNumber =" + accountNumber);
         if (query.list().isEmpty()) {
-            throw new CustomException("Account with number: " + accountNumber + " not found.");
+            throw new NoResourcesException("Account with number: " + accountNumber + " not found.");
         }
         Account account = query.getResultList().get(0);
         if (!account.getIsActive()) {
-            throw new CustomException("Account with number " + accountNumber + " is not active.");
+            throw new LockedException("Account with number " + accountNumber + " is not active.");
         }
         if (account.getPinNumber() != pinNumber) {
             throw new NoAccessException("Pin number is incorrect.");
@@ -73,8 +75,9 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public Account updateAccount(Account account) {
-
-        session.update(account);
+        System.out.println(account.getAccountNumber());
+        session.saveOrUpdate(account);
+        System.out.println("after");
         return account;
     }
 
@@ -88,19 +91,19 @@ public class AccountsDaoImpl implements AccountsDao {
 
         Query<Account> query = session.createQuery("from Account where accountNumber =" + fromAccount);
         if (query.list().isEmpty()) {
-            throw new CustomException("Account with number: " + fromAccount + " not found.");
+            throw new NoResourcesException("Account with number: " + fromAccount + " not found.");
         }
         Account frAccount = query.getResultList().get(0);
 
         if (!frAccount.getIsActive()) {
-            throw new CustomException("Account with number " + fromAccount + " is not active.");
+            throw new LockedException("Account with number " + fromAccount + " is not active.");
         }
         if (frAccount.getPinNumber() != pinNumber) {
             throw new NoAccessException("Pin number is incorrect.");
         }
         query = session.createQuery("from Account where accountNumber =" + destinationAccount);
         if (query.list().isEmpty()) {
-            throw new CustomException("Destination account with number: " + destinationAccount + " not found.");
+            throw new NoResourcesException("Destination account with number: " + destinationAccount + " not found.");
         }
         Account toAccount = query.getResultList().get(0);
         float balance1 = frAccount.getBalance();
@@ -132,7 +135,7 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     @Override
-    public int getFreeAccountNumber() {
+    public int getAvailableAccountNumber() {
 
         Query<Account> query = session.createQuery("from Account", Account.class);
         List<Account> list = query.getResultList();
@@ -154,12 +157,12 @@ public class AccountsDaoImpl implements AccountsDao {
 
         Query<Account> query = session.createQuery("from Account where accountNumber =" + accountNumber);
         if (query.list().isEmpty()) {
-            throw new CustomException("Account with number: " + accountNumber + " not found.");
+            throw new NoResourcesException("Account with number: " + accountNumber + " not found.");
         }
         Account account = query.getResultList().get(0);
 
         if (!account.getIsActive()) {
-            throw new CustomException("Account with number " + accountNumber + " is not active.");
+            throw new LockedException("Account with number " + accountNumber + " is not active.");
         }
         if (account.getPinNumber() != pinNumber) {
             throw new NoAccessException("Pin number is incorrect.");
@@ -183,12 +186,12 @@ public class AccountsDaoImpl implements AccountsDao {
 
         Query<Account> query = session.createQuery("from Account where accountNumber =" + accountNumber);
         if (query.list().isEmpty()) {
-            throw new CustomException("Account with number: " + accountNumber + " not found.");
+            throw new NoResourcesException("Account with number: " + accountNumber + " not found.");
         }
         Account account = query.getResultList().get(0);
 
         if (!account.getIsActive()) {
-            throw new CustomException("Account with number " + accountNumber + " is not active.");
+            throw new LockedException("Account with number " + accountNumber + " is not active.");
         }
         if (account.getPinNumber() != pinNumber) {
             throw new NoAccessException("Pin number is incorrect.");

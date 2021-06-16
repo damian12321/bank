@@ -1,6 +1,8 @@
 package pl.springbank.bank.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import pl.springbank.bank.enums.TransactionType;
 
 import javax.persistence.*;
@@ -9,10 +11,16 @@ import java.util.Objects;
 
 
 @Entity
+@Data
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Account account;
+
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
@@ -39,47 +47,6 @@ public class Transaction {
         this.transactionType = transactionType;
         this.date = date;
         this.description = description;
-        this.amount = amount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public TransactionType getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
-
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(float amount) {
         this.amount = amount;
     }
 

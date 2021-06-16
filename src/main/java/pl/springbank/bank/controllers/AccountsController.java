@@ -1,6 +1,8 @@
 package pl.springbank.bank.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 import pl.springbank.bank.entity.Account;
@@ -38,13 +40,17 @@ public class AccountsController {
     }
 
     @PutMapping("/accounts")
-    public Account updateAccount(@RequestBody Account account) {
-        return accountsService.updateAccount(account);
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
+        int accountId=account.getId();
+        Account tempAccount=accountsService.updateAccount(account);
+        if(tempAccount.getId()==accountId)
+            return new ResponseEntity<>(tempAccount, HttpStatus.OK);
+        return new ResponseEntity<>(tempAccount, HttpStatus.CREATED);
     }
 
     @GetMapping("/accounts/number")
-    public int getFreeAccountNumber() {
-        return accountsService.getFreeAccountNumber();
+    public int getAvailableAccountNumber() {
+        return accountsService.getAvailableAccountNumber();
     }
 
 

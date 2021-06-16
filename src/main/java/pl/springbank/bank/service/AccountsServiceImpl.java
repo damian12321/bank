@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @Transactional(dontRollbackOn = {NoAccessException.class})
 public class AccountsServiceImpl implements AccountsService {
+
     private AccountsDao accountsDao;
 
     @Autowired
@@ -50,8 +51,8 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public int getFreeAccountNumber() {
-        return accountsDao.getFreeAccountNumber();
+    public int getAvailableAccountNumber() {
+        return accountsDao.getAvailableAccountNumber();
     }
 
     @Override

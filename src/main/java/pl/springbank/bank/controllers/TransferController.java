@@ -10,6 +10,7 @@ import pl.springbank.bank.service.AccountsService;
 @EnableTransactionManagement
 @RequestMapping("/api")
 public class TransferController {
+
     private AccountsService accountsService;
 
     @Autowired

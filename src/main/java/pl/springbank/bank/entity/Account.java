@@ -2,22 +2,33 @@ package pl.springbank.bank.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
+@Data
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Size(min=2, message="Name should have at least 2 characters")
+    private String firstName;
+
+    @Size(min=2, message="Last name should have at least 2 characters")
+    private String lastName;
+
+    @Size(min=4, message="Password should have at least 4 characters")
+    private String password;
+
+    @Column(unique = true)
     private int accountNumber;
 
-    @Min(value = 1000,message = "Pin number should have at least 4 characters")
+    @Min(value = 1000, message = "Pin number should have at least 4 characters")
     private int pinNumber;
 
     private float balance;
@@ -26,8 +37,7 @@ public class Account {
 
     private boolean isActive;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
     private List<Transaction> transactionList;
 
     public Account() {
@@ -50,83 +60,23 @@ public class Account {
         this.pinNumber = pinNumber;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
     @JsonIgnore
     public int getPinNumber() {
         return pinNumber;
     }
+
     @JsonProperty
     public void setPinNumber(int pinNumber) {
         this.pinNumber = pinNumber;
     }
 
-    public float getBalance() {
-        return balance;
+    public boolean getIsActive()
+    {
+    return isActive;
+    }
+    public void setIsActive(boolean isActive)
+    {
+        this.isActive=isActive;
     }
 
-    public void setBalance(float balance) {
-        this.balance = balance;
-    }
-
-    public List<Transaction> getTransactionList() {
-        return transactionList;
-    }
-
-    public void setTransactionList(List<Transaction> transactionList) {
-        this.transactionList = transactionList;
-    }
-
-    public boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean active) {
-        isActive = active;
-    }
-
-    public int getLoginAttempts() {
-        return loginAttempts;
-    }
-
-    public void setLoginAttempts(int loginAttempts) {
-        this.loginAttempts = loginAttempts;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
-        return accountNumber == account.accountNumber && Float.compare(account.balance, balance) == 0 && loginAttempts == account.loginAttempts && isActive == account.isActive;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(accountNumber, balance, loginAttempts, isActive);
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "AccountNumber=" + accountNumber +
-                ", balance=" + balance +
-                ", loginAttempts=" + loginAttempts +
-                ", isActive=" + isActive +
-                ", transactionList=" + transactionList +
-                '}';
-    }
 }

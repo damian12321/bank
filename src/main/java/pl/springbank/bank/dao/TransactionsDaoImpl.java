@@ -5,8 +5,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.springbank.bank.entity.Transaction;
-import pl.springbank.bank.exception.CustomException;
-
+import pl.springbank.bank.exception.LockedException;
 import javax.persistence.EntityManager;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
 
         Transaction transaction = session.get(Transaction.class, id);
         if (transaction == null) {
-            throw new CustomException("Transaction with id: " + id + " not found.");
+            throw new LockedException("Transaction with id: " + id + " not found.");
         }
         session.delete(transaction);
         return "Transaction with id: " + id + " has been deleted.";
@@ -46,7 +45,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
 
         Transaction transaction = session.get(Transaction.class, id);
         if (transaction == null) {
-            throw new CustomException("Transaction with id: " + id + " not found.");
+            throw new LockedException("Transaction with id: " + id + " not found.");
         }
         return transaction;
     }

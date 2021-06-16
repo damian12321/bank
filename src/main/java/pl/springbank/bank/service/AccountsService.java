@@ -18,7 +18,7 @@ public interface AccountsService {
 
     public String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount, String description);
 
-    public int getFreeAccountNumber();
+    public int getAvailableAccountNumber();
 
     public String depositMoney(int accountNumber, int pinNumber, float amount);
 
