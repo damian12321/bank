@@ -1,6 +1,5 @@
 ## Table of contents
 * [General info](#general-info)
-* [Project assumptions](#project-assumptions)
 * [Application idea](#application-idea)
 * [Technologies](#technologies)
 * [Setup](#setup)
@@ -11,28 +10,21 @@
 ## General info
 This project is a RESTful bank application.
 	
-## Project assumptions
-* Use SQL Database to storage the data
-* Use Spring Security
-* Use Spring AOP
-* Use Hibernate
-* Use JUnit 5
-
 ## Application idea
-* Every customer can create the account 
-* Every customer can get all information about their own account
-* Every customer can perform banking operations such as deposit money, withdraw money, check balance, transfer between accounts.
-* Only the administrator can get information about accounts, customers, latest transactions.
+* Every client can create the account 
+* Every client can get all information about their own account
+* Every client can perform banking operations such as deposit money, withdraw money, check balance, transfer between accounts.
+* Only the administrator can get information about accounts, latest transactions.
 * Block third party activities on the account.
 
 ## Technologies
 Project is created with:
-* Java 8
-* Spring
+* Java
+* Spring Boot
 * Hibernate
-* JUnit 5
-* Maven 3
-* MySQL
+* JUnit
+* Maven
+* H2 Database
 
 ## Setup
 Clone the repo from github:
@@ -41,40 +33,55 @@ Clone the repo from github:
 $ git clone https://github.com/damian12321/bank
 ```
 
-You can run the application on your favourite IDE using an application server such as Tomcat.
-The app will start running at http://localhost:8080.
-You can also create a .war file 
+You can run the application on your favourite IDE or by command line in the application root folder.
 
 ```
-$ mvn clean package
+$ mvn clean install
+$ java -jar target/bank-0.0.1-SNAPSHOT.jar
 ```
+The app will start running at http://localhost:8080/
 
-and deploy it directly to the application server.
 You can test the application by Postman 
 https://www.postman.com/
-or use my own bank client application
+or use my own bank client application (in progress)
 https://github.com/damian12321/bank-client
 
 ## List of endpoints
+GET    /api/accounts 																		- get all accounts, only for administrator
+GET    /api/accounts/{accountId}/{password} 												- get information about account
+GET    /api/accounts/{accountId}/{password}/transactions 									- get information about account transactions
+GET    /api/transactions 																	- get all transactions, only for administrator
+GET    /api/transactions/{transactionId} 													- get transaction, only for administrator
+GET    /api/accounts/number 																- get free account number
+PUT    /api/accounts 																		- update account
+       Request Body: Account object
+PUT    /api/transactions 																	- update transaction
+       Request Body: Transaction object
+POST   /api/accounts 																		- create account
+       Request Body: Account object
+POST   /api/deposit/{accountNumber}/{pinNumber}/{amount} 									- deposit money
+       Path Variable: int accountNumber, int pinNumber, float amount
+POST   /api/transfer/{fromAccountNumber}/{pinNumber}/{toAccountNumber}/{amount}/{message}   - transfer money to other account 
+       Path Variable: int fromAccountNumber, int pinNumber, int toAccountNumber, float amount, String message
+POST   /api/withdraw/{accountNumber}/{pinNumber}/{amount}                                   - withdraw money
+       Path Variable: int accountNumber, int pinNumber, float amount
+DELETE /api/accounts/{accountId}															- delete account, only for administrator
+       Path Variable: int accountId
+DELETE /api/transactions/{transactionId} 													- delete transaction, only for administrator
+       Path Variable: int transactionId
+	   
+More informations about endpoints and responses you can find in Swagger Documentation available at http://localhost:8080/swagger-ui/#/
 
-IN PROGRESS
-
-## List of objects
-List of objects saved as JSON 
+## List of objects saved as JSON 
 
 ```
-Customer
+Account
 {
 "id": int,
 "firstName": "String",
 "lastName": "String",
 "account": Account object,
 "password": "String"
-}
-
-Account
-{
-"id": int,
 "accountNumber": int,
 "pinNumber": int,
 "balance": float,
@@ -93,8 +100,8 @@ Transaction
 }
 ```
 ## Screenshots
-#### Example result of GET /api/account 
+#### Example result of GET /api/accounts
 ![Screen1](./img/Screen1.png)
-
-#### Entity Relationship Diagram
+#### Example result of GET /api/transactions
 ![Screen2](./img/Screen2.png)
+

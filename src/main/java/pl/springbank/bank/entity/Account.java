@@ -40,24 +40,19 @@ public class Account {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
     private List<Transaction> transactionList;
 
-    public Account() {
-    }
-
-    public Account(int id, int accountNumber, int pinNumber, float balance) {
+    public Account(int id, String firstName, String lastName, String password, int accountNumber, int pinNumber, float balance, int loginAttempts, boolean isActive) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
         this.accountNumber = accountNumber;
-        this.balance = balance;
-        this.loginAttempts = 3;
-        this.isActive = true;
         this.pinNumber = pinNumber;
+        this.balance = balance;
+        this.loginAttempts = loginAttempts;
+        this.isActive = isActive;
     }
+    public Account(){
 
-    public Account(int accountNumber, int pinNumber, float balance) {
-        this.accountNumber = accountNumber;
-        this.balance = balance;
-        this.loginAttempts = 3;
-        this.isActive = true;
-        this.pinNumber = pinNumber;
     }
 
     @JsonIgnore

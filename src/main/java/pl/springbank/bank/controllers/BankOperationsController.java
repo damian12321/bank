@@ -9,12 +9,12 @@ import pl.springbank.bank.service.AccountsService;
 @RestController
 @EnableTransactionManagement
 @RequestMapping("/api")
-public class TransferController {
+public class BankOperationsController {
 
     private AccountsService accountsService;
 
     @Autowired
-    public TransferController(AccountsService accountsService) {
+    public BankOperationsController(AccountsService accountsService) {
         this.accountsService = accountsService;
 
     }
