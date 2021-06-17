@@ -47,33 +47,34 @@ or use my own bank client application (in progress)
 https://github.com/damian12321/bank-client
 
 ## List of endpoints
-GET    /api/accounts 																		- get all accounts, only for administrator
-GET    /api/accounts/{accountId}/{password} 												- get information about account
-GET    /api/accounts/{accountId}/{password}/transactions 									- get information about account transactions
-GET    /api/transactions 																	- get all transactions, only for administrator
-GET    /api/transactions/{transactionId} 													- get transaction, only for administrator
-GET    /api/accounts/number 																- get free account number
-PUT    /api/accounts 																		- update account
+```
+GET    /api/accounts 												- get all accounts, only for administrator
+GET    /api/accounts/{accountId}/{password} 									- get information about account
+GET    /api/accounts/{accountId}/{password}/transactions 							- get information about account transactions
+GET    /api/transactions 											- get all transactions, only for administrator
+GET    /api/transactions/{transactionId} 									- get transaction, only for administrator
+GET    /api/accounts/number 											- get free account number
+PUT    /api/accounts 												- update account
        Request Body: Account object
-PUT    /api/transactions 																	- update transaction
+PUT    /api/transactions 											- update transaction, only for administrator
        Request Body: Transaction object
-POST   /api/accounts 																		- create account
+POST   /api/accounts 												- create account
        Request Body: Account object
-POST   /api/deposit/{accountNumber}/{pinNumber}/{amount} 									- deposit money
+POST   /api/deposit/{accountNumber}/{pinNumber}/{amount} 							- deposit money
        Path Variable: int accountNumber, int pinNumber, float amount
-POST   /api/transfer/{fromAccountNumber}/{pinNumber}/{toAccountNumber}/{amount}/{message}   - transfer money to other account 
+POST   /api/transfer/{fromAccountNumber}/{pinNumber}/{toAccountNumber}/{amount}/{message}   			- transfer money to other account 
        Path Variable: int fromAccountNumber, int pinNumber, int toAccountNumber, float amount, String message
-POST   /api/withdraw/{accountNumber}/{pinNumber}/{amount}                                   - withdraw money
+POST   /api/withdraw/{accountNumber}/{pinNumber}/{amount}                                   			- withdraw money
        Path Variable: int accountNumber, int pinNumber, float amount
-DELETE /api/accounts/{accountId}															- delete account, only for administrator
+DELETE /api/accounts/{accountId}										- delete account, only for administrator
        Path Variable: int accountId
-DELETE /api/transactions/{transactionId} 													- delete transaction, only for administrator
+DELETE /api/transactions/{transactionId} 									- delete transaction, only for administrator
        Path Variable: int transactionId
-	   
+```	   
 More informations about endpoints and responses you can find in Swagger Documentation available at http://localhost:8080/swagger-ui/#/
 
-## List of objects saved as JSON 
-
+## List of objects 
+Saved as a JSON
 ```
 Account
 {
