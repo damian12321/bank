@@ -10,6 +10,7 @@ import pl.springbank.bank.exception.CustomException;
 import pl.springbank.bank.exception.LockedException;
 import pl.springbank.bank.exception.NoAccessException;
 import pl.springbank.bank.exception.NoResourcesException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.Date;
@@ -27,13 +28,11 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public List<Account> getAccounts() {
-        List<Account> list = entityManager.createQuery("from Account", Account.class).getResultList();
-        return list;
+        return entityManager.createQuery("from Account", Account.class).getResultList();
     }
 
     @Override
     public String deleteAccount(int accountId) {
-
         Account account = entityManager.find(Account.class, accountId);
         if (account == null) {
             throw new NoResourcesException("Account with number: " + accountId + " not found.");
@@ -44,31 +43,20 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public Account getAccount(int accountId, String password) {
-        List<Account> list = entityManager.createQuery("from Account where id =" + accountId).getResultList();
-        if (list.isEmpty()) {
-            throw new NoResourcesException("Account with id: " + accountId + " not found.");
-        }
-        System.out.println(list.get(0));
-        Account account = list.get(0);
-        if (!account.getIsActive()) {
-            throw new LockedException("Account with id " + accountId + " is not active.");
-        }
-        if (!account.getPassword().equals(password)) {
-            throw new NoAccessException("Password is incorrect.");
-        }
+        Account account=checkAccountByAccountIdAndReturnAccount(accountId,password);
         account.setLoginAttempts(3);
         return account;
     }
 
     @Override
     public Account getAccountByAccountNumber(int accountNumber) {
-        List<Account> list=entityManager.createQuery("from Account a where a.accountNumber="+accountNumber).getResultList();
+        List<Account> list = entityManager.createQuery("from Account a where a.accountNumber=" + accountNumber).getResultList();
         return list.get(0);
     }
 
     @Override
     public Account getAccountByAccountId(int accountId) {
-        List<Account> list=entityManager.createQuery("from Account a where a.id="+accountId).getResultList();
+        List<Account> list = entityManager.createQuery("from Account a where a.id=" + accountId).getResultList();
         return list.get(0);
     }
 
@@ -94,7 +82,7 @@ public class AccountsDaoImpl implements AccountsDao {
             account.setId(0);
             entityManager.persist(account);
         }
-        return tempAccount;
+        return account;
     }
 
     @Override
@@ -111,20 +99,9 @@ public class AccountsDaoImpl implements AccountsDao {
         if (fromAccount == destinationAccount || amount <= 0) {
             throw new CustomException("Incorrect values.");
         }
-
-        List<Account> list = entityManager.createQuery("from Account where accountNumber =" + fromAccount).getResultList();
-        if (list.isEmpty()) {
-            throw new NoResourcesException("Account with number: " + fromAccount + " not found.");
-        }
-        Account frAccount = list.get(0);
-
-        if (!frAccount.getIsActive()) {
-            throw new LockedException("Account with number " + fromAccount + " is not active.");
-        }
-        if (frAccount.getPinNumber() != pinNumber) {
-            throw new NoAccessException("Pin number is incorrect.");
-        }
-        list = entityManager.createQuery("from Account where accountNumber =" + destinationAccount).getResultList();
+        checkAccountByAccountNumberAndReturnAccount(fromAccount, pinNumber);
+        Account frAccount = checkAccountByAccountNumberAndReturnAccount(fromAccount, pinNumber);
+        List<Account> list = entityManager.createQuery("from Account where accountNumber =" + destinationAccount).getResultList();
         if (list.isEmpty()) {
             throw new NoResourcesException("Destination account with number: " + destinationAccount + " not found.");
         }
@@ -157,7 +134,6 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public int getAvailableAccountNumber() {
-
         List<Account> list = entityManager.createQuery("from Account", Account.class).getResultList();
         int highestNumber = 1;
         for (Account account : list) {
@@ -175,18 +151,7 @@ public class AccountsDaoImpl implements AccountsDao {
             throw new CustomException("Incorrect values.");
         }
 
-        List<Account> list = entityManager.createQuery("from Account where accountNumber =" + accountNumber).getResultList();
-        if (list.isEmpty()) {
-            throw new NoResourcesException("Account with number: " + accountNumber + " not found.");
-        }
-        Account account = list.get(0);
-
-        if (!account.getIsActive()) {
-            throw new LockedException("Account with number " + accountNumber + " is not active.");
-        }
-        if (account.getPinNumber() != pinNumber) {
-            throw new NoAccessException("Pin number is incorrect.");
-        }
+        Account account = checkAccountByAccountNumberAndReturnAccount(accountNumber, pinNumber);
         float balance = account.getBalance();
         account.setBalance(balance + amount);
         List<Transaction> list1 = account.getTransactionList();
@@ -204,18 +169,7 @@ public class AccountsDaoImpl implements AccountsDao {
             throw new CustomException("Incorrect values.");
         }
 
-        List<Account> list = entityManager.createQuery("from Account where accountNumber =" + accountNumber).getResultList();
-        if (list.isEmpty()) {
-            throw new NoResourcesException("Account with number: " + accountNumber + " not found.");
-        }
-        Account account = list.get(0);
-
-        if (!account.getIsActive()) {
-            throw new LockedException("Account with number " + accountNumber + " is not active.");
-        }
-        if (account.getPinNumber() != pinNumber) {
-            throw new NoAccessException("Pin number is incorrect.");
-        }
+        Account account = checkAccountByAccountNumberAndReturnAccount(accountNumber, pinNumber);
         float balance = account.getBalance();
         if (balance - amount < 0) {
             throw new CustomException("Not enough money in the account.");
@@ -231,16 +185,38 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public List<Transaction> getAccountsTransactions(int accountId, String password) {
-        Account account = entityManager.find(Account.class, accountId);
-        if (account == null) {
+        Account account=checkAccountByAccountIdAndReturnAccount(accountId,password);
+        return account.getTransactionList();
+    }
+
+    private Account checkAccountByAccountNumberAndReturnAccount(int accountNumber, int pinNumber) {
+        List<Account> list = entityManager.createQuery("from Account where accountNumber =" + accountNumber).getResultList();
+        if (list.isEmpty()) {
+            throw new NoResourcesException("Account with number: " + accountNumber + " not found.");
+        }
+        Account account = list.get(0);
+
+        if (!account.getIsActive()) {
+            throw new LockedException("Account with number " + accountNumber + " is not active.");
+        }
+        if (account.getPinNumber() != pinNumber) {
+            throw new NoAccessException("Pin number is incorrect.");
+        }
+        return account;
+    }
+
+    private Account checkAccountByAccountIdAndReturnAccount(int accountId, String password) {
+        List<Account> list = entityManager.createQuery("from Account where id =" + accountId).getResultList();
+        if (list.isEmpty()) {
             throw new NoResourcesException("Account with id: " + accountId + " not found.");
+        }
+        Account account = list.get(0);
+        if (!account.getIsActive()) {
+            throw new LockedException("Account with id " + accountId + " is not active.");
         }
         if (!account.getPassword().equals(password)) {
             throw new NoAccessException("Password is incorrect.");
         }
-        if (!account.getIsActive()) {
-            throw new LockedException("Account with id " + accountId + " is not active.");
-        }
-        return account.getTransactionList();
+        return account;
     }
 }

@@ -1,18 +1,17 @@
 package pl.springbank.bank.service;
 
 
-
 import pl.springbank.bank.entity.Transaction;
 
 import java.util.List;
 
 public interface TransactionsService {
-    public List<Transaction> getTransactions();
+    List<Transaction> getTransactions();
 
-    public String deleteTransaction(int id);
+    String deleteTransaction(int id);
 
-    public Transaction getTransaction(int id);
+    Transaction getTransaction(int id);
 
-    public Transaction updateTransaction(Transaction transaction);
+    Transaction updateTransaction(Transaction transaction);
 
 }

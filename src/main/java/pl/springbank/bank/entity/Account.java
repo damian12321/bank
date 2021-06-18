@@ -51,28 +51,9 @@ public class Account {
         this.loginAttempts = loginAttempts;
         this.isActive = isActive;
     }
-    public Account(){
 
-    }
+    public Account() {
 
-    @JsonIgnore
-    public int getPinNumber() {
-        return pinNumber;
-    }
-
-    @JsonProperty
-    public void setPinNumber(int pinNumber) {
-        this.pinNumber = pinNumber;
-    }
-
-    @JsonIgnore
-    public String getPassword() {
-        return password;
-    }
-
-    @JsonProperty
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @JsonIgnore
@@ -93,5 +74,19 @@ public class Account {
         this.isActive = isActive;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 }

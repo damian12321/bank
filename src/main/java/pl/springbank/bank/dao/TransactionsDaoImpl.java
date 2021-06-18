@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.springbank.bank.entity.Transaction;
 import pl.springbank.bank.exception.LockedException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
@@ -57,8 +58,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
             query.setParameter("transactionType", transaction.getTransactionType());
             query.setParameter("id", transaction.getId());
             query.executeUpdate();
-        }else
-        {
+        } else {
             throw new LockedException("Transaction with id: " + transaction.getId() + " not found.");
         }
         return tempTransaction;

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.springbank.bank.entity.Account;
 import pl.springbank.bank.entity.Transaction;
 import pl.springbank.bank.service.AccountsService;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class AccountsController {
 
     @PutMapping("/accounts")
     public ResponseEntity<Account> saveOrUpdateAccount(@Valid @RequestBody Account account) {
-        int accountId = account.getId();
+        long accountId = account.getId();
         Account tempAccount = accountsService.saveOrUpdateAccount(account);
         if (tempAccount.getId() == accountId)
             return new ResponseEntity<>(tempAccount, HttpStatus.OK);
