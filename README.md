@@ -43,7 +43,7 @@ The app will start running at http://localhost:8080/
 
 You can test the application by Postman 
 https://www.postman.com/
-or use my own bank client application (in progress)
+or use my own bank client application
 https://github.com/damian12321/bank-client
 
 ## List of endpoints
