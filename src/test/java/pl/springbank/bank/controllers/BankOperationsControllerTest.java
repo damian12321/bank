@@ -26,7 +26,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeTransferWithCorrectPin() throws Exception {
+    public void shouldReturnIsOkForTransferWithCorrectPinNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/transfer/200/1234/201/100/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -38,7 +38,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeTransferWithIncorrectPin() throws Exception {
+    public void shouldReturnIsUnauthorizedForTransferWithIncorrectPinNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/transfer/200/1233/201/100/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -50,7 +50,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeTransferWithIncorrectAmountValue() throws Exception {
+    public void shouldReturnIsBadRequestForTransferWithIncorrectAmountValue() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/transfer/200/1234/201/100000/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeTransferWithIncorrectDestinationAccountNumber() throws Exception {
+    public void shouldReturnIsNotFoundForTransferWithInvalidSenderAccountNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/transfer/200/1234/199/100/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -74,7 +74,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeTransferWithIncorrectSenderAccountNumber() throws Exception {
+    public void shouldReturnIsNotFoundForTransferWithInvalidDestinationAccountNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/transfer/199/1234/201/100/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -86,7 +86,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeWithdrawWithIncorrectPin() throws Exception {
+    public void shouldReturnIsUnauthorizedForWithdrawWithIncorrectPinNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/withdraw/200/1233/100")
                 .accept(MediaType.APPLICATION_JSON))
@@ -96,7 +96,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeWithdrawWithIncorrectValue() throws Exception {
+    public void shouldReturnIsBadRequestForWithdrawWithIncorrectAmountValue() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/withdraw/200/1234/1000000")
                 .accept(MediaType.APPLICATION_JSON))
@@ -106,7 +106,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeWithdrawWithCorrectValue() throws Exception {
+    public void shouldReturnIsOkForWithdrawWithCorrectValues() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/withdraw/200/1234/100")
                 .accept(MediaType.APPLICATION_JSON))
@@ -116,7 +116,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeDepositWithIncorrectPin() throws Exception {
+    public void shouldReturnIsUnauthorizedForDepositWithIncorrectPinNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/deposit/200/1233/100")
                 .accept(MediaType.APPLICATION_JSON))
@@ -126,7 +126,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeDepositWithIncorrectValue() throws Exception {
+    public void shouldReturnIsBadRequestForDepositWithIncorrectAmountValue() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/deposit/200/1234/-200")
                 .accept(MediaType.APPLICATION_JSON))
@@ -136,7 +136,7 @@ public class BankOperationsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void makeDepositWithCorrectValue() throws Exception {
+    public void shouldReturnIsOkForDepositWithCorrectValues() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/deposit/200/1234/100")
                 .accept(MediaType.APPLICATION_JSON))

@@ -24,7 +24,7 @@ class GetEndpointsForAccountsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void getAccountsAsCustomer() throws Exception {
+    public void shouldReturnIsForbiddenForGetAccountsAsCustomer() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/accounts")
                 .accept(MediaType.APPLICATION_JSON))
@@ -34,7 +34,7 @@ class GetEndpointsForAccountsControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void getAccountsAsAdmin() throws Exception {
+    public void shouldReturnIsOkForGetAccountsAsAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/accounts")
                 .accept(MediaType.APPLICATION_JSON))
@@ -44,7 +44,7 @@ class GetEndpointsForAccountsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void getSpecificAccountWithCorrectPassword() throws Exception {
+    public void shouldReturnIsOkForGetAccountWithCorrectPinNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/accounts/1/1234")
                 .accept(MediaType.APPLICATION_JSON))
@@ -54,7 +54,7 @@ class GetEndpointsForAccountsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void getSpecificAccountWithIncorrectPassword() throws Exception {
+    public void shouldReturnIsUnauthorizedForGetAccountWithIncorrectPinNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/accounts/1/1235")
                 .accept(MediaType.APPLICATION_JSON))
@@ -63,8 +63,8 @@ class GetEndpointsForAccountsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
-    public void getFreeAccountNumber() throws Exception {
+    @WithMockUser(roles = "CUSTOMER")
+    public void shouldReturnIsOkForGetFreeAccountNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/accounts/number")
                 .accept(MediaType.APPLICATION_JSON))
@@ -74,7 +74,7 @@ class GetEndpointsForAccountsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void getAccountTransactionsWithCorrectPassword() throws Exception {
+    public void shouldReturnIsOkForGetTransactionsWithCorrectPassword() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/accounts/1/1234/transactions")
                 .accept(MediaType.APPLICATION_JSON))
@@ -84,7 +84,7 @@ class GetEndpointsForAccountsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void getAccountTransactionsWithIncorrectPassword() throws Exception {
+    public void shouldReturnIsUnauthorizedForGetTransactionsWithIncorrectPassword() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/accounts/1/1233/transactions")
                 .accept(MediaType.APPLICATION_JSON))

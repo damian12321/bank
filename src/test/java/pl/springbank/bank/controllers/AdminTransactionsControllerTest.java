@@ -26,7 +26,7 @@ public class AdminTransactionsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void getTransactionsAsCustomer() throws Exception {
+    public void shouldReturnIsForbiddenForGetTransactionsAsCustomer() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/transactions")
                 .accept(MediaType.APPLICATION_JSON))
@@ -36,7 +36,7 @@ public class AdminTransactionsControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void getTransactionsAsAdmin() throws Exception {
+    public void shouldReturnIsOkForGetTransactionsAsAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/transactions")
                 .accept(MediaType.APPLICATION_JSON))
@@ -46,7 +46,7 @@ public class AdminTransactionsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void getSpecificTransactionAsCustomer() throws Exception {
+    public void shouldReturnIsForbiddenForGetTransactionAsCustomer() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/transactions/1")
                 .accept(MediaType.APPLICATION_JSON))
@@ -56,7 +56,7 @@ public class AdminTransactionsControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void getSpecificTransactionAsAdmin() throws Exception {
+    public void shouldReturnIsOkForGetTransactionAsAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/transactions/2")
                 .accept(MediaType.APPLICATION_JSON))
@@ -66,7 +66,7 @@ public class AdminTransactionsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void deleteTransactionAsCustomer() throws Exception {
+    public void shouldReturnIsForbiddenForDeleteTransactionAsCustomer() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .delete("/api/transactions/1")
                 .accept(MediaType.APPLICATION_JSON))
@@ -76,7 +76,7 @@ public class AdminTransactionsControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void deleteTransactionAsAdmin() throws Exception {
+    public void shouldReturnIsOkForDeleteTransactionAsAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .delete("/api/transactions/1")
                 .accept(MediaType.APPLICATION_JSON))
@@ -86,7 +86,7 @@ public class AdminTransactionsControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    public void updateTransaction() throws Exception {
+    public void shouldReturnIsOkForUpdateTransactionAsCustomer() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .put("/api/transactions/")
                 .contentType(MediaType.APPLICATION_JSON)

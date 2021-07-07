@@ -27,9 +27,9 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
 
     @BeforeAll
     public static void init() {
-        account1AsJson = "{\"id\":3,\"firstName\":\"Test1\",\"lastName\":\"Test1\",\"accountNumber\":202,\"balance\":1000.0," +
+        account1AsJson = "{\"id\":0,\"firstName\":\"Test1\",\"lastName\":\"Test1\",\"accountNumber\":202,\"balance\":1000.0," +
                 "\"loginAttempts\":3,\"isActive\":true,\"password\":\"1234\",\"pinNumber\":1234}";
-        account2AsJson = "{\"id\":4,\"firstName\":\"Test2\",\"lastName\":\"Test2\",\"accountNumber\":203,\"balance\":1000.0," +
+        account2AsJson = "{\"id\":0,\"firstName\":\"Test2\",\"lastName\":\"Test2\",\"accountNumber\":203,\"balance\":1000.0," +
                 "\"loginAttempts\":3,\"isActive\":true,\"password\":\"1234\",\"pinNumber\":1234}";
         account2AsJsonWithUpdate = "{\"id\":4,\"firstName\":\"Test2\",\"lastName\":\"Test2\",\"accountNumber\":203,\"balance\":2000.0," +
                 "\"loginAttempts\":3,\"isActive\":true,\"password\":\"2000\",\"pinNumber\":2000}";
@@ -38,7 +38,7 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
     @Test
     @WithMockUser(roles = "CUSTOMER")
     @Order(1)
-    public void postNewAccount() throws Exception {
+    public void shouldReturnIsCreatedForPostAccountWithCorrectData() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -51,9 +51,9 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
     @Test
     @WithMockUser(roles = "CUSTOMER")
     @Order(2)
-    public void putNewAccount() throws Exception {
+    public void shouldReturnIsCreatedForPutAccountWithCorrectData() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                .post("/api/accounts")
+                .put("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(account2AsJson)
                 .accept(MediaType.APPLICATION_JSON))
@@ -64,7 +64,7 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
     @Test
     @WithMockUser(roles = "CUSTOMER")
     @Order(3)
-    public void updateAccount() throws Exception {
+    public void shouldReturnIsOkForUpdateAccountWithCorrectData() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .put("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -77,7 +77,7 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
     @Test
     @WithMockUser(roles = "CUSTOMER")
     @Order(4)
-    public void deleteAsCustomer() throws Exception {
+    public void shouldReturnIsForbiddenForDeleteAccountAsCustomer() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .delete("/api/accounts/3")
                 .accept(MediaType.APPLICATION_JSON))
@@ -88,7 +88,7 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
     @Test
     @WithMockUser(roles = "ADMIN")
     @Order(5)
-    public void deleteAsAdmin() throws Exception {
+    public void shouldReturnIsOkForDeleteAccountAsAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .delete("/api/accounts/1")
                 .accept(MediaType.APPLICATION_JSON))
