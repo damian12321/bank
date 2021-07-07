@@ -81,7 +81,6 @@ Account
 "id": int,
 "firstName": "String",
 "lastName": "String",
-"account": Account object,
 "password": "String"
 "accountNumber": int,
 "pinNumber": int,
