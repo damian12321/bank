@@ -17,19 +17,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class GetEndpointsForAccountsControllerTest {
+
     @Autowired
     private MockMvc mvc;
     @Autowired
     AccountsService accountsService;
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
-    public void shouldReturnIsForbiddenForGetAccountsAsCustomer() throws Exception {
+    public void shouldReturnIsUnauthorizedForGetAccountsAsNotAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/accounts")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -43,7 +43,6 @@ class GetEndpointsForAccountsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
     public void shouldReturnIsOkForGetAccountWithCorrectPinNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/accounts/1/1234")
@@ -53,7 +52,6 @@ class GetEndpointsForAccountsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
     public void shouldReturnIsUnauthorizedForGetAccountWithIncorrectPinNumber() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/accounts/1/1235")
@@ -63,30 +61,18 @@ class GetEndpointsForAccountsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
-    public void shouldReturnIsOkForGetFreeAccountNumber() throws Exception {
-        mvc.perform(MockMvcRequestBuilders
-                .get("/api/accounts/number")
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @WithMockUser(roles = "CUSTOMER")
     public void shouldReturnIsOkForGetTransactionsWithCorrectPassword() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                .get("/api/accounts/1/1234/transactions")
+                .get("/api/accounts/2/1234/transactions")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
     public void shouldReturnIsUnauthorizedForGetTransactionsWithIncorrectPassword() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                .get("/api/accounts/1/1233/transactions")
+                .get("/api/accounts/2/1233/transactions")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isUnauthorized());

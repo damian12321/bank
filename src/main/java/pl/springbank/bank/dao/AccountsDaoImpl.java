@@ -80,6 +80,7 @@ public class AccountsDaoImpl implements AccountsDao {
 
         } else {
             account.setId(0);
+            account.setAccountNumber(getAvailableAccountNumber());
             entityManager.persist(account);
         }
         return account;
@@ -88,6 +89,7 @@ public class AccountsDaoImpl implements AccountsDao {
     @Override
     public Account createAccount(Account account) {
         account.setId(0);
+        account.setAccountNumber(getAvailableAccountNumber());
         entityManager.persist(account);
         return account;
     }
@@ -130,18 +132,6 @@ public class AccountsDaoImpl implements AccountsDao {
         entityManager.persist(transactionIn);
         entityManager.persist(transactionOut);
         return "The money has been transferred from " + fromAccount + " to " + destinationAccount + ".";
-    }
-
-    @Override
-    public int getAvailableAccountNumber() {
-        List<Account> list = entityManager.createQuery("from Account", Account.class).getResultList();
-        int highestNumber = 1;
-        for (Account account : list) {
-            if (account.getAccountNumber() > highestNumber) {
-                highestNumber = account.getAccountNumber();
-            }
-        }
-        return ++highestNumber;
     }
 
     @Override
@@ -218,5 +208,16 @@ public class AccountsDaoImpl implements AccountsDao {
             throw new NoAccessException("Password is incorrect.");
         }
         return account;
+    }
+
+    public int getAvailableAccountNumber() {
+        List<Account> list = entityManager.createQuery("from Account", Account.class).getResultList();
+        int highestNumber = 1;
+        for (Account account : list) {
+            if (account.getAccountNumber() > highestNumber) {
+                highestNumber = account.getAccountNumber();
+            }
+        }
+        return ++highestNumber;
     }
 }

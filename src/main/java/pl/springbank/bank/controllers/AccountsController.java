@@ -55,11 +55,6 @@ public class AccountsController {
         return new ResponseEntity<>(account, HttpStatus.CREATED);
     }
 
-    @GetMapping("/accounts/number")
-    public int getAvailableAccountNumber() {
-        return accountsService.getAvailableAccountNumber();
-    }
-
     @GetMapping("/accounts/{accountId}/{password}/transactions")
     public List<Transaction> getAccountsTransactions(@PathVariable int accountId, @PathVariable String password) {
         return accountsService.getAccountsTransactions(accountId, password);

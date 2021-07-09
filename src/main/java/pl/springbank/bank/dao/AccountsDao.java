@@ -23,8 +23,6 @@ public interface AccountsDao {
 
     String transferMoney(int fromAccount, int pinNumber, int destinationAccount, float amount, String description);
 
-    int getAvailableAccountNumber();
-
     String depositMoney(int accountNumber, int pinNumber, float amount);
 
     String withdrawMoney(int accountNumber, int pinNumber, float amount);

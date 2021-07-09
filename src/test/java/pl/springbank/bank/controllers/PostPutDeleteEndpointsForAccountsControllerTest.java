@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PostPutDeleteEndpointsForAccountsControllerTest {
+
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -36,7 +37,6 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
     @Order(1)
     public void shouldReturnIsCreatedForPostAccountWithCorrectData() throws Exception {
         mvc.perform(MockMvcRequestBuilders
@@ -49,7 +49,6 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
     @Order(2)
     public void shouldReturnIsCreatedForPutAccountWithCorrectData() throws Exception {
         mvc.perform(MockMvcRequestBuilders
@@ -62,7 +61,6 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
     @Order(3)
     public void shouldReturnIsOkForUpdateAccountWithCorrectData() throws Exception {
         mvc.perform(MockMvcRequestBuilders
@@ -75,14 +73,13 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
     @Order(4)
-    public void shouldReturnIsForbiddenForDeleteAccountAsCustomer() throws Exception {
+    public void shouldReturnIsUnauthorizedForDeleteAccountAsNotAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .delete("/api/accounts/3")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

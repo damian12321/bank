@@ -25,13 +25,12 @@ public class AdminTransactionsControllerTest {
             "\"description\":\"NEW DESCRIPTION\"}";
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
-    public void shouldReturnIsForbiddenForGetTransactionsAsCustomer() throws Exception {
+    public void shouldReturnIsUnauthorizedForGetTransactionsAsNotAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/transactions")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -45,13 +44,12 @@ public class AdminTransactionsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
-    public void shouldReturnIsForbiddenForGetTransactionAsCustomer() throws Exception {
+    public void shouldReturnIsUnauthorizedForGetTransactionAsNotAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/api/transactions/1")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -65,13 +63,12 @@ public class AdminTransactionsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
-    public void shouldReturnIsForbiddenForDeleteTransactionAsCustomer() throws Exception {
+    public void shouldReturnIsUnauthorizedForDeleteTransactionAsNotAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .delete("/api/transactions/1")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -85,8 +82,7 @@ public class AdminTransactionsControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "CUSTOMER")
-    public void shouldReturnIsOkForUpdateTransactionAsCustomer() throws Exception {
+    public void shouldReturnIsOkForUpdateTransactionAsNotAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .put("/api/transactions/")
                 .contentType(MediaType.APPLICATION_JSON)

@@ -62,11 +62,6 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public int getAvailableAccountNumber() {
-        return accountsDao.getAvailableAccountNumber();
-    }
-
-    @Override
     public String depositMoney(int accountNumber, int pinNumber, float amount) {
         return accountsDao.depositMoney(accountNumber, pinNumber, amount);
     }

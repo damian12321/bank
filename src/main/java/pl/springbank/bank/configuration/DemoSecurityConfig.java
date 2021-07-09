@@ -16,8 +16,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("admin").password("{noop}admin").roles("ADMIN").and().
-                withUser("customer").password("{noop}customer").roles("CUSTOMER");
+                .withUser("admin").password("{noop}admin").roles("ADMIN");
     }
 
     @Override
@@ -26,12 +25,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/accounts").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/transactions").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/accounts/").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/transactions/").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/accounts/**").hasAnyRole("ADMIN,CUSTOMER")
                 .antMatchers(HttpMethod.GET, "/api/transactions/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/transfer/**").hasAnyRole("ADMIN,CUSTOMER")
-                .antMatchers(HttpMethod.POST, "/api/**").hasAnyRole("ADMIN,CUSTOMER")
                 .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN")
                 .and()
                 .httpBasic()
