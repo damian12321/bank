@@ -11,7 +11,7 @@ import pl.springbank.bank.service.AccountsService;
 
 import javax.validation.Valid;
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @EnableTransactionManagement
 @RequestMapping("/api")

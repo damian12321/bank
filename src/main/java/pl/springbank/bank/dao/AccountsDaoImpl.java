@@ -1,6 +1,5 @@
 package pl.springbank.bank.dao;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.springbank.bank.entity.Account;
@@ -12,6 +11,7 @@ import pl.springbank.bank.exception.NoAccessException;
 import pl.springbank.bank.exception.NoResourcesException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
@@ -81,7 +81,12 @@ public class AccountsDaoImpl implements AccountsDao {
         } else {
             account.setId(0);
             account.setAccountNumber(getAvailableAccountNumber());
-            entityManager.persist(account);
+            try {
+                entityManager.persist(account);
+            }catch (PersistenceException e)
+            {
+                throw new CustomException("An account with this email or account number already exists.");
+            }
         }
         return account;
     }
@@ -90,7 +95,12 @@ public class AccountsDaoImpl implements AccountsDao {
     public Account createAccount(Account account) {
         account.setId(0);
         account.setAccountNumber(getAvailableAccountNumber());
-        entityManager.persist(account);
+        try {
+            entityManager.persist(account);
+        }catch (PersistenceException e)
+        {
+            throw new CustomException("An account with this email or account number already exists.");
+        }
         return account;
     }
 
