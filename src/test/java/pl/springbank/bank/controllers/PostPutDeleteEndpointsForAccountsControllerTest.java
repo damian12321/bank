@@ -29,11 +29,11 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
     @BeforeAll
     public static void init() {
         account1AsJson = "{\"id\":0,\"firstName\":\"Test1\",\"lastName\":\"Test1\",\"accountNumber\":202,\"balance\":1000.0," +
-                "\"loginAttempts\":3,\"isActive\":true,\"password\":\"1234\",\"pinNumber\":1234}";
+                "\"loginAttempts\":3,\"isActive\":true,\"password\":\"1234\",\"pinNumber\":1234,\"email\":\"email1@gmail.com\"}";
         account2AsJson = "{\"id\":0,\"firstName\":\"Test2\",\"lastName\":\"Test2\",\"accountNumber\":203,\"balance\":1000.0," +
-                "\"loginAttempts\":3,\"isActive\":true,\"password\":\"1234\",\"pinNumber\":1234}";
+                "\"loginAttempts\":3,\"isActive\":true,\"password\":\"1234\",\"pinNumber\":1234,\"email\":\"email2@gmail.com\"}";
         account2AsJsonWithUpdate = "{\"id\":4,\"firstName\":\"Test2\",\"lastName\":\"Test2\",\"accountNumber\":203,\"balance\":2000.0," +
-                "\"loginAttempts\":3,\"isActive\":true,\"password\":\"2000\",\"pinNumber\":2000}";
+                "\"loginAttempts\":3,\"isActive\":true,\"password\":\"2000\",\"pinNumber\":2000,\"email\":\"email3@gmail.com\"}";
     }
 
     @Test

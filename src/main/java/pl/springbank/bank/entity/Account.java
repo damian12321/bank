@@ -3,6 +3,7 @@ package pl.springbank.bank.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import pl.springbank.bank.validation.ValidEmail;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -27,6 +28,10 @@ public class Account {
 
     @Column(unique = true)
     private int accountNumber;
+
+    @ValidEmail
+    @Column(unique = true)
+    private String email;
 
     @Min(value = 1000, message = "Pin number should have at least 4 characters")
     private int pinNumber;
@@ -55,7 +60,7 @@ public class Account {
     public Account() {
 
     }
-
+    
     @JsonIgnore
     public List<Transaction> getTransactionList() {
         return transactionList;
@@ -88,5 +93,13 @@ public class Account {
 
     public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
