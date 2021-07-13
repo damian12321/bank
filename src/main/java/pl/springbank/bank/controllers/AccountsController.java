@@ -11,7 +11,7 @@ import pl.springbank.bank.service.AccountsService;
 
 import javax.validation.Valid;
 import java.util.List;
-@CrossOrigin
+
 @RestController
 @EnableTransactionManagement
 @RequestMapping("/api")
@@ -59,6 +59,5 @@ public class AccountsController {
     public List<Transaction> getAccountsTransactions(@PathVariable int accountId, @PathVariable String password) {
         return accountsService.getAccountsTransactions(accountId, password);
     }
-
 
 }

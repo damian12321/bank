@@ -7,7 +7,7 @@ import pl.springbank.bank.entity.Transaction;
 import pl.springbank.bank.service.TransactionsService;
 
 import java.util.List;
-@CrossOrigin
+
 @RestController
 @EnableTransactionManagement
 @RequestMapping("/api")

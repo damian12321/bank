@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 import pl.springbank.bank.service.AccountsService;
-@CrossOrigin
+
 @RestController
 @EnableTransactionManagement
 @RequestMapping("/api")

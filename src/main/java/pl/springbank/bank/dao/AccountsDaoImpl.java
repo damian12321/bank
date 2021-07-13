@@ -9,7 +9,6 @@ import pl.springbank.bank.exception.CustomException;
 import pl.springbank.bank.exception.LockedException;
 import pl.springbank.bank.exception.NoAccessException;
 import pl.springbank.bank.exception.NoResourcesException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -94,6 +93,7 @@ public class AccountsDaoImpl implements AccountsDao {
     @Override
     public Account createAccount(Account account) {
         account.setId(0);
+        account.setIsActive(true);
         account.setAccountNumber(getAvailableAccountNumber());
         try {
             entityManager.persist(account);
