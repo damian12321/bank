@@ -47,7 +47,17 @@ public class LoggingAspect {
 
     }
 
-    @Around("beforeTransfer()||beforeWithdraw()||beforeDeposit()")
+    @Pointcut("execution(* pl.springbank.bank.service.AccountsService.changePassword(int,String,String))")
+    public void beforeChangePassword() {
+
+    }
+
+    @Pointcut("execution(* pl.springbank.bank.service.AccountsService.changePinNumber(int,int,int))")
+    public void beforeChangePinNumber() {
+
+    }
+
+    @Around("beforeTransfer()||beforeWithdraw()||beforeDeposit()||beforeChangePinNumber()")
     public Object pinNotCorrect(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         Object result;
@@ -62,21 +72,8 @@ public class LoggingAspect {
         return result;
     }
 
-    private Object decreaseLoginAttempts(NoAccessException e, Account account) {
-        int loginAttempts = account.getLoginAttempts();
-        if (loginAttempts > 0) {
-            account.setLoginAttempts(--loginAttempts);
-            if (loginAttempts == 0) {
-                account.setIsActive(false);
-            }
-            accountsService.saveOrUpdateAccount(account);
-        }
-        throw new NoAccessException(e.getMessage());
-    }
-
-    @Around("beforeGetAccount()||beforeGetAccountsTransactions()")
+    @Around("beforeGetAccount()||beforeGetAccountsTransactions()||beforeChangePassword()")
     public Object passwordNotCorrect(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-
         Object result = null;
         try {
             result = proceedingJoinPoint.proceed();
@@ -87,6 +84,19 @@ public class LoggingAspect {
             decreaseLoginAttempts(e, account);
         }
         return result;
+    }
+
+    private Object decreaseLoginAttempts(NoAccessException e, Account account) {
+        int loginAttempts = account.getLoginAttempts();
+        if (loginAttempts > 0) {
+            account.setLoginAttempts(--loginAttempts);
+            if (loginAttempts == 0) {
+                System.out.println("wtf");
+                account.setIsActive(false);
+            }
+            accountsService.saveOrUpdateAccount(account);
+        }
+        throw new NoAccessException(e.getMessage());
     }
 
 }

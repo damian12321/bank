@@ -28,4 +28,8 @@ public interface AccountsDao {
     String withdrawMoney(int accountNumber, int pinNumber, float amount);
 
     List<Transaction> getAccountsTransactions(int accountId, String password);
+
+    String changePassword(int id, String oldPassword, String newPassword);
+
+    String changePinNumber(int accountNumber, int oldPin, int newPin);
 }

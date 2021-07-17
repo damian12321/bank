@@ -60,4 +60,16 @@ public class AccountsController {
         return accountsService.getAccountsTransactions(accountId, password);
     }
 
+    @PostMapping("accounts/changePassword/{id}/{oldPassword}/{newPassword}")
+    public String changePassword(@PathVariable int id,@PathVariable String oldPassword,@PathVariable String newPassword)
+    {
+        return accountsService.changePassword(id,oldPassword,newPassword);
+    }
+
+    @PostMapping("accounts/changePin/{accountNumber}/{oldPin}/{newPin}")
+    public String changePinNumber(@PathVariable int accountNumber,@PathVariable int oldPin,@PathVariable int newPin)
+    {
+        return accountsService.changePinNumber(accountNumber,oldPin,newPin);
+    }
+
 }

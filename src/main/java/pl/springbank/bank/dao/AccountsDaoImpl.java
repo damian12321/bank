@@ -65,20 +65,20 @@ public class AccountsDaoImpl implements AccountsDao {
         if (tempAccount != null) {
             Query query = entityManager.createQuery("UPDATE Account a SET a.accountNumber = :accountNumber, " +
                     "a.balance=:balance,a.firstName=:firstName,a.lastName=:lastName,a.isActive=:isActive," +
-                    "a.password=:password,a.pinNumber=:pinNumber,a.loginAttempts=:loginAttempts WHERE a.id=:id");
+                    "a.loginAttempts=:loginAttempts WHERE a.id=:id");
             query.setParameter("accountNumber", account.getAccountNumber());
             query.setParameter("balance", account.getBalance());
             query.setParameter("firstName", account.getFirstName());
             query.setParameter("lastName", account.getLastName());
             query.setParameter("isActive", account.getIsActive());
-            query.setParameter("password", account.getPassword());
-            query.setParameter("pinNumber", account.getPinNumber());
             query.setParameter("loginAttempts", account.getLoginAttempts());
             query.setParameter("id", account.getId());
             query.executeUpdate();
 
         } else {
             account.setId(0);
+            account.setIsActive(true);
+            account.setLoginAttempts(3);
             account.setAccountNumber(getAvailableAccountNumber());
             try {
                 entityManager.persist(account);
@@ -94,6 +94,7 @@ public class AccountsDaoImpl implements AccountsDao {
     public Account createAccount(Account account) {
         account.setId(0);
         account.setIsActive(true);
+        account.setLoginAttempts(3);
         account.setAccountNumber(getAvailableAccountNumber());
         try {
             entityManager.persist(account);
@@ -206,11 +207,10 @@ public class AccountsDaoImpl implements AccountsDao {
     }
 
     private Account checkAccountByAccountIdAndReturnAccount(int accountId, String password) {
-        List<Account> list = entityManager.createQuery("from Account where id =" + accountId).getResultList();
-        if (list.isEmpty()) {
+        Account account=entityManager.find(Account.class,accountId);
+        if (account==null) {
             throw new NoResourcesException("Account with id: " + accountId + " not found.");
         }
-        Account account = list.get(0);
         if (!account.getIsActive()) {
             throw new LockedException("Account with id " + accountId + " is not active.");
         }
@@ -229,5 +229,19 @@ public class AccountsDaoImpl implements AccountsDao {
             }
         }
         return ++highestNumber;
+    }
+
+    @Override
+    public String changePassword(int id, String oldPassword, String newPassword) {
+        Account account=checkAccountByAccountIdAndReturnAccount(id,oldPassword);
+        account.setPassword(newPassword);
+        return "Password has been changed.";
+    }
+
+    @Override
+    public String changePinNumber(int accountNumber, int oldPin, int newPin) {
+        Account account=checkAccountByAccountNumberAndReturnAccount(accountNumber,oldPin);
+        account.setPinNumber(newPin);
+        return "Pin number has been changed";
     }
 }

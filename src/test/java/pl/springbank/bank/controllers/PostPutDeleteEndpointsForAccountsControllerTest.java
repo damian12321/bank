@@ -74,6 +74,70 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
 
     @Test
     @Order(4)
+    public void shouldReturnIsOkForChangePasswordWithValidData() throws Exception
+    {
+        mvc.perform(MockMvcRequestBuilders
+                .post("/api/accounts/changePassword/3/1234/4444")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+
+    @Order(5)
+    @RepeatedTest(3)
+    public void shouldReturnIsUnauthorizedForChangePasswordWithInvalidData() throws Exception
+    {
+        mvc.perform(MockMvcRequestBuilders
+                .post("/api/accounts/changePassword/3/1234/4444")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
+    @Test
+    @Order(6)
+    public void shouldReturnIsOkForChangePinWithValidData() throws Exception
+    {
+        mvc.perform(MockMvcRequestBuilders
+                .post("/api/accounts/changePin/203/1234/4444")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+
+    @Order(7)
+    @RepeatedTest(3)
+    public void shouldReturnIsUnauthorizedForChangePinWithInvalidData() throws Exception
+    {
+        mvc.perform(MockMvcRequestBuilders
+                .post("/api/accounts/changePin/203/1234/4444")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
+    @Test
+    @Order(8)
+    public void shouldReturnIsLockedAfterPreviousFailAttemptsForPasswordChange() throws Exception
+    {
+        mvc.perform(MockMvcRequestBuilders
+                .post("/api/accounts/changePassword/3/1234/4444")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isLocked());
+    }
+    @Test
+    @Order(9)
+    public void shouldReturnIsLockedAfterPreviousFailAttemptsForPinChange() throws Exception
+    {
+        mvc.perform(MockMvcRequestBuilders
+                .post("/api/accounts/changePin/203/1234/4444")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isLocked());
+    }
+    @Test
+    @Order(10)
     public void shouldReturnIsUnauthorizedForDeleteAccountAsNotAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .delete("/api/accounts/3")
@@ -84,7 +148,7 @@ public class PostPutDeleteEndpointsForAccountsControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    @Order(5)
+    @Order(11)
     public void shouldReturnIsOkForDeleteAccountAsAdmin() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .delete("/api/accounts/1")

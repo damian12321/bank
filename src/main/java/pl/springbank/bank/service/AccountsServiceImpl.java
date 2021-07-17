@@ -75,4 +75,14 @@ public class AccountsServiceImpl implements AccountsService {
     public List<Transaction> getAccountsTransactions(int accountId, String password) {
         return accountsDao.getAccountsTransactions(accountId, password);
     }
+
+    @Override
+    public String changePassword(int id, String oldPassword, String newPassword) {
+        return accountsDao.changePassword(id,oldPassword,newPassword);
+    }
+
+    @Override
+    public String changePinNumber(int accountNumber, int oldPin, int newPin) {
+        return accountsDao.changePinNumber(accountNumber,oldPin,newPin);
+    }
 }

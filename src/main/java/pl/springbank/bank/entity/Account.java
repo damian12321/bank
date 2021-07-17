@@ -102,4 +102,20 @@ public class Account {
     public void setEmail(String email) {
         this.email = email;
     }
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+    @JsonIgnore
+    public int getPinNumber() {
+        return pinNumber;
+    }
+    @JsonProperty
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    @JsonProperty
+    public void setPinNumber(int pinNumber) {
+        this.pinNumber = pinNumber;
+    }
 }
